@@ -1,0 +1,157 @@
+/* General Styles */
+.HomeApp {
+  background-color: #288598;
+  min-height: 100vh;
+  color: white;
+  padding-bottom: 10px;
+  margin-bottom: -10px;
+}
+
+/* Topbar Styles */
+.HomeTopbar {
+  height: 30px;
+  background-color: #a8d5de13;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+
+/* Drawer Styles */
+/* Drawer Styles */
+.HomeDrawer {
+  position: fixed;
+  top: 0;
+  left: -250px;
+  width: 250px;
+  height: 100%;
+  background-color: #ffffff;
+  padding: 20px;
+  transition: left 0.3s ease-in-out;
+  z-index: 15;
+  display: flex;
+  flex-direction: column;
+}
+
+.HomeDrawer.open {
+  left: 0;
+}
+
+.HomeDrawerButton {
+  background-color: #288598;
+  color: white;
+  border-radius: 8px;
+  width: 100% !important; /* Ensures full width */
+  margin-bottom: 10px;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  text-align: center;
+  text-decoration: none; /* Remove underline from link */
+  display: block; /* Ensures full width for anchor tags */
+}
+
+.HomeDrawerButton:hover {
+  background-color: #1e506b;
+  color: #ffffff;
+}
+
+.HomeDrawerCloseButton {
+  background: none;
+  border: none;
+  margin-right: auto;
+  color: #288598;
+  font-size: 24px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.drawer-content {
+  flex: 1; /* Takes up remaining space */
+}
+
+.drawer-footer {
+  margin-top: auto; /* Pushes footer to the bottom */
+  text-align: center;
+}
+
+.btn-danger {
+  background-color: #dc3545; /* Red color for logout button */
+}
+
+.btn-danger:hover {
+  background-color: #c82333; /* Darker red on hover */
+}
+
+.powered-by {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #666;
+}
+.btn-danger{
+  background-color: brown;
+}
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.loading-image {
+  width: 100px;  /* Adjust size if necessary */
+  height: auto;
+}
+
+.HomeContent{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.HomeTitle {
+  color: white;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.HomeSection {
+  background: #c4c4c4;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  width: 80%;
+  max-width: 350px;
+}
+
+.SectionTitle {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.IconGrid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.IconItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: #3d3dff;
+  font-size: 14px;
+}
+
+.IconItem i {
+  font-size: 30px;
+}

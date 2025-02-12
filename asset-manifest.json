@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/python-notes/static/css/main.442ed03f.css",
-    "main.js": "/python-notes/static/js/main.e7f33d81.js",
+    "main.css": "/python-notes/static/css/main.5f056390.css",
+    "main.js": "/python-notes/static/js/main.61f0b311.js",
     "index.html": "/python-notes/index.html",
-    "main.442ed03f.css.map": "/python-notes/static/css/main.442ed03f.css.map",
-    "main.e7f33d81.js.map": "/python-notes/static/js/main.e7f33d81.js.map"
+    "main.5f056390.css.map": "/python-notes/static/css/main.5f056390.css.map",
+    "main.61f0b311.js.map": "/python-notes/static/js/main.61f0b311.js.map"
   },
   "entrypoints": [
-    "static/css/main.442ed03f.css",
-    "static/js/main.e7f33d81.js"
+    "static/css/main.5f056390.css",
+    "static/js/main.61f0b311.js"
   ]
 }

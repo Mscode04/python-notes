@@ -22,50 +22,65 @@ function Home() {
           <i className="bi bi-list"></i>
         </button>
       </header>
-
       <div className="HomeContent">
         <h2 className="HomeTitle">Home</h2>
 
         <div className="HomeSection">
-          <h3 className="SectionTitle">Registration</h3>
+          <h3 className="SectionTitle">Reports</h3>
           <div className="IconGrid">
-            <Link to="/main/doctor" className="IconItem">
-              <i className="bi bi-person-fill"></i>
+            <Link to="/main/sireport-list" className="IconItem">
+              <i className="bi bi-file-earmark-text-fill"></i>
+              <span>Single Report</span>
+            </Link>
+            <Link to="/main/annual-report" className="IconItem">
+              <i className="bi bi-calendar-check-fill"></i>
+              <span>Annual Report</span>
+            </Link>
+            <Link to="/main/doctor-list" className="IconItem">
+              <i className="bi bi-file-medical-fill"></i>
               <span>Doctor</span>
             </Link>
-            <Link to="/main/staff" className="IconItem">
+            <Link to="/main/admin-details" className="IconItem">
+              <i className="bi bi-person-badge-fill"></i>
+              <span>Admins</span>
+            </Link>
+            <Link to="/main/staff-details" className="IconItem">
               <i className="bi bi-people-fill"></i>
-              <span>Staff</span>
-            </Link>
-            <Link to="/main/admin" className="IconItem">
-              <i className="bi bi-gear-fill"></i>
-              <span>Admin</span>
-            </Link>
-            <Link to="/main/product" className="IconItem">
-              <i className="bi bi-cart-fill"></i>
-              <span>Product</span>
+              <span>Staffs</span>
             </Link>
             <Link to="/main/headquarters" className="IconItem">
-              <i className="bi bi-house-door-fill"></i>
-              <span>Headquarters</span>
+              <i className="bi bi-building"></i>
+              <span>HQ</span>
             </Link>
           </div>
         </div>
 
         <div className="HomeSection">
-          <h3 className="SectionTitle">Reports</h3>
+          <h3 className="SectionTitle">New Registrations</h3>
           <div className="IconGrid">
+            <Link to="/main/doctor" className="IconItem">
+              <i className="bi bi-person-plus-fill"></i>
+              <span>Doctor</span>
+            </Link>
+            <Link to="/main/staff" className="IconItem">
+              <i className="bi bi-geo-alt-fill"></i>
+              <span>Area</span>
+            </Link>
+            <Link to="/admin-details" className="IconItem">
+              <i className="bi bi-person-gear"></i>
+              <span>Admin</span>
+            </Link>
+            <Link to="/main/product" className="IconItem">
+              <i className="bi bi-box-seam"></i>
+              <span>Product</span>
+            </Link>
+            <Link to="/main/headquarters" className="IconItem">
+              <i className="bi bi-buildings"></i>
+              <span>HQ</span>
+            </Link>
             <Link to="/main/create" className="IconItem">
-              <i className="bi bi-pencil-square"></i>
-              <span>Create</span>
-            </Link>
-            <Link to="/main/single-report" className="IconItem">
-              <i className="bi bi-book-fill"></i>
-              <span>Single Report</span>
-            </Link>
-            <Link to="/main/annual-report" className="IconItem">
-              <i className="bi bi-journal-bookmark-fill"></i>
-              <span>Annual Report</span>
+              <i className="bi bi-file-earmark-plus-fill"></i>
+              <span>Create New Report</span>
             </Link>
           </div>
         </div>
@@ -75,19 +90,12 @@ function Home() {
         <button className="HomeDrawerCloseButton" onClick={toggleDrawer}>
           <i className="bi bi-arrow-left"></i>
         </button>
-        <div className="drawer-content">
-          <a href="https://neuraq.github.io/Palliative-Mkba-App-Contact/" target="_blank" rel="noopener noreferrer" className="HomeDrawerButton">
-            Contact Us
-          </a>
-          <a href="https://neuraq.github.io/Palliative-Mkba-App-About/" target="_blank" rel="noopener noreferrer" className="HomeDrawerButton">
-            About Us
-          </a>
-        </div>
+        
         <div className="drawer-footer">
-          <button className="HomeDrawerButton btn-danger" onClick={handleLogout}>
+          <button className="HomeDrawerButton btn-danger mb-5" onClick={handleLogout}>
             Logout
           </button>
-          <div className="powered-by">Powered by neuraq</div>
+          <div className="powered-by">Powered by Neuraq</div>
         </div>
       </div>
     </div>

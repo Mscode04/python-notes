@@ -1,0 +1,83 @@
+/* Container for the form */
+.adminreg-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Header section */
+  .adminreg-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Back button */
+  .adminreg-back-button {
+    background: transparent;
+    color: blue;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  
+  .adminreg-back-button:hover {
+    color: black;
+  }
+  
+  /* Title */
+  .adminreg-title {
+    font-size: 24px;
+    margin: 0;
+  }
+  
+  /* Form styling */
+  .adminreg-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Form group (label + input) */
+  .adminreg-form-group {
+    margin-bottom: 15px;
+  }
+  
+  .adminreg-form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  /* Input fields */
+  .adminreg-input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+  }
+  
+  /* Submit button */
+  .adminreg-submit-button {
+    background: #28a745;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .adminreg-submit-button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .adminreg-submit-button:hover:not(:disabled) {
+    background: #218838;
+  }

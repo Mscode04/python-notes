@@ -1,0 +1,93 @@
+/* Area Management Page Styles */
+
+.area-container {
+    width: 80%;
+    margin: auto;
+    text-align: center;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .back-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+  
+  .back-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .area-form {
+    margin-bottom: 20px;
+  }
+  
+  .area-form input, .search-input {
+    padding: 10px;
+    margin: 10px;
+    width: 60%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .area-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: white;
+  }
+  
+  .area-table th, .area-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+  }
+  
+  .area-table th {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  button {
+    padding: 8px 12px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  button:hover {
+    opacity: 0.8;
+  }
+  
+  button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .save-button {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .cancel-button {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .update-button {
+    background-color: #ffc107;
+    color: black;
+  }
+  
+  .delete-button {
+    background-color: #dc3545;
+    color: white;
+  }

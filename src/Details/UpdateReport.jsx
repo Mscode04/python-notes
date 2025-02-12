@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { db } from "../Firebase/config";
-import { collection, getDocs ,addDoc} from "firebase/firestore";
+import { doc, getDoc, updateDoc,collection,getDocs } from "firebase/firestore";
 import Select from 'react-select';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './Create.css'; // Import CSS for styling
 
-function Create() {
+function UpdateReport() {
+  const { id } = useParams();
+
   // Section 0: General Details
   const [reportOfYear, setReportOfYear] = useState('');
 
   // Section 1: Doctor Details
-  const [doctorName, setDoctorName] = useState('');
+  const [doctorName, setDoctorName] = useState(null);
   const [address, setAddress] = useState('');
   const [phone, setPhone] = useState('');
   const [designation, setDesignation] = useState('');
@@ -47,24 +50,47 @@ function Create() {
   const [productsList, setProductsList] = useState([]);
 
   useEffect(() => {
-    fetchProducts();
-  }, []);
-  
-  const fetchProducts = async () => {
-    const querySnapshot = await getDocs(collection(db, "Products"));
-    const products = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    console.log(products);
-    
-    setProductsList(products.map(product => ({ value: product.id, label: product.productName, ...product })));
-  };
-
-  // Fetch data from Firebase
-  useEffect(() => {
+    fetchReport();
     fetchDoctors();
     fetchAreas();
     fetchHeadquarters();
-    fetchProducts()
-  }, []);
+    fetchProducts();
+  }, [id]);
+
+  const fetchReport = async () => {
+    const docRef = doc(db, "Reports", id);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      const reportData = docSnap.data();
+      setReportOfYear(reportData.reportOfYear);
+      setDoctorName({ value: reportData.doctorName, label: reportData.doctorName });
+      setAddress(reportData.address);
+      setPhone(reportData.phone);
+      setDesignation(reportData.designation);
+      setArea(reportData.area ? { value: reportData.area, label: reportData.area } : null);
+      setHeadquarters(reportData.headquarters ? { value: reportData.headquarters, label: reportData.headquarters } : null);
+      setStaff(reportData.staff ? { value: reportData.staff, label: reportData.staff } : null);
+      setActivityMonth(reportData.activityMonth);
+      setActivityDay(reportData.activityDay);
+      setActivityAmount(reportData.activityAmount);
+      setMr(reportData.mr);
+      setAbm(reportData.abm);
+      setRsm(reportData.rsm);
+      setTargetedTimes(reportData.targetedTimes);
+      setPrescribedProducts(reportData.prescribedProducts.map(product => ({ productName: product })));
+      setTargetedProducts(reportData.targetedProducts.map(product => ({ productName: product })));
+      setLastYearAmount(reportData.lastYearAmount);
+      setDynamicFields(reportData.dynamicFields);
+    } else {
+      toast.error("No such document!");
+    }
+  };
+
+  const fetchProducts = async () => {
+    const querySnapshot = await getDocs(collection(db, "Products"));
+    const products = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    setProductsList(products.map(product => ({ value: product.id, label: product.productName, ...product })));
+  };
 
   const fetchDoctors = async () => {
     const querySnapshot = await getDocs(collection(db, "Doctors"));
@@ -96,17 +122,19 @@ function Create() {
       setStaff(selectedDoctor.staff ? { value: selectedDoctor.staff, label: selectedDoctor.staff } : null);
     }
   };
+
   const handlePrescribedProductChange = (selectedOption, index) => {
     const newProducts = [...prescribedProducts];
     newProducts[index].productName = selectedOption ? selectedOption.label : '';
     setPrescribedProducts(newProducts);
   };
-  
+
   const handleTargetedProductChange = (selectedOption, index) => {
     const newProducts = [...targetedProducts];
     newProducts[index].productName = selectedOption ? selectedOption.label : '';
     setTargetedProducts(newProducts);
   };
+
   const handleHeadquartersChange = (selectedOption) => {
     setHeadquarters(selectedOption);
     const selectedHeadquarter = headquartersList.find(hq => hq.value === selectedOption.value);
@@ -131,14 +159,10 @@ function Create() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
-      // Prepare the data to be saved
       const reportData = {
-        // Section 0: General Details
         reportOfYear,
-  
-        // Section 1: Doctor Details
         doctorName: doctorName.label,
         address,
         phone,
@@ -146,8 +170,6 @@ function Create() {
         area: area ? area.label : null,
         headquarters: headquarters ? headquarters.label : null,
         staff: staff ? staff.label : null,
-  
-        // Section 2: Activity Details
         activityMonth,
         activityDay,
         activityAmount,
@@ -155,20 +177,10 @@ function Create() {
         abm,
         rsm,
         targetedTimes,
-  
-        // Section 3: Prescribed Products
         prescribedProducts: prescribedProducts.map(product => product.productName),
-  
-        // Section 4: Targeted Products
         targetedProducts: targetedProducts.map(product => product.productName),
-  
-        // Section 5: Last Year Amount
         lastYearAmount,
-  
-        // Section 6: Dynamic Date and Amount
         dynamicFields,
-  
-        // Section 7: Calculated Fields
         totalBusiness,
         percentage,
         expectedAmount,
@@ -177,34 +189,32 @@ function Create() {
                 statusColor === 'yellow' ? 'Average' : 
                 'Good'
       };
-  
-      // Add the report data to the "Reports" collection in Firestore
-      const docRef = await addDoc(collection(db, "Reports"), reportData);
-  
-      // Notify the user that the report was created successfully
-      toast.success(`Report created successfully with ID: ${docRef.id}`);
+
+      await updateDoc(doc(db, "Reports", id), reportData);
+      toast.success(`Report updated successfully with ID: ${id}`);
+      
     } catch (error) {
-      console.error("Error adding document: ", error);
-      toast.error("Failed to create report. Please try again.");
+      console.error("Error updating document: ", error);
+      toast.error("Failed to update report. Please try again.");
     }
   };
 
-// Calculate Total Business
-const totalBusiness = parseFloat(lastYearAmount || 0) + dynamicFields.reduce((sum, field) => sum + parseFloat(field.amount || 0), 0);
-// Calculate Expected Amount
-const expectedAmount = parseFloat(activityAmount || 0) * parseFloat(targetedTimes || 0);
-// Calculate Percentage
-const percentage = totalBusiness === 0 ? 0 : ((parseFloat( totalBusiness|| 0) /expectedAmount ) * 100).toFixed(2);
+  // Calculate Total Business
+  const totalBusiness = parseFloat(lastYearAmount || 0) + dynamicFields.reduce((sum, field) => sum + parseFloat(field.amount || 0), 0);
+  // Calculate Expected Amount
+  const expectedAmount = parseFloat(activityAmount || 0) * parseFloat(targetedTimes || 0);
+  // Calculate Percentage
+  const percentage = totalBusiness === 0 ? 0 : ((parseFloat(totalBusiness || 0) / expectedAmount) * 100).toFixed(2);
 
-// Determine Status
-const getStatusColor = () => {
-  if (percentage >= 75) return 'green';
-  if (percentage >= 50) return 'yellow';
-  if (percentage >= 25) return 'orange';
-  return 'red';
-};
+  // Determine Status
+  const getStatusColor = () => {
+    if (percentage >= 75) return 'green';
+    if (percentage >= 50) return 'yellow';
+    if (percentage >= 25) return 'orange';
+    return 'red';
+  };
 
-const statusColor = getStatusColor();
+  const statusColor = getStatusColor();
 
   return (
     <div className="create-report-container">
@@ -220,7 +230,7 @@ const statusColor = getStatusColor();
         pauseOnHover
       />
 
-      <h1 className="create-report-title">Create Report</h1>
+      <h1 className="create-report-title">Update Report</h1>
 
       <form onSubmit={handleSubmit}>
         {/* Section 0: General Details */}
@@ -313,14 +323,13 @@ const statusColor = getStatusColor();
         <div className="section">
           <h2>Activity Details</h2>
           <div className="form-group">
-          <label>Month:</label>
-<input
-  type="month"
-  value={activityMonth}
-  onChange={(e) => setActivityMonth(e.target.value)}
-  required
-/>
-
+            <label>Month:</label>
+            <input
+              type="month"
+              value={activityMonth}
+              onChange={(e) => setActivityMonth(e.target.value)}
+              required
+            />
           </div>
           <div className="form-group">
             <label>Day:</label>
@@ -378,43 +387,41 @@ const statusColor = getStatusColor();
           </div>
         </div>
 
-       {/* Section 3: Prescribed Products */}
-<div className="section">
-  <h2>Prescribed Products</h2>
-  {prescribedProducts.map((product, index) => (
-    <div key={index} className="form-group products-names">
-      <label>Product Name:</label>
-      <Select
-        value={productsList.find(option => option.label === product.productName)}
-        onChange={(selectedOption) => handlePrescribedProductChange(selectedOption, index)}
-        options={productsList}
-        placeholder="Select Product"
-        
-        isSearchable
-      />
-    </div>
-  ))}
-  <button type="button" onClick={handleAddPrescribedProduct}>Add More</button>
-</div>
+        {/* Section 3: Prescribed Products */}
+        <div className="section">
+          <h2>Prescribed Products</h2>
+          {prescribedProducts.map((product, index) => (
+            <div key={index} className="form-group products-names">
+              <label>Product Name:</label>
+              <Select
+                value={productsList.find(option => option.label === product.productName)}
+                onChange={(selectedOption) => handlePrescribedProductChange(selectedOption, index)}
+                options={productsList}
+                placeholder="Select Product"
+                isSearchable
+              />
+            </div>
+          ))}
+          <button type="button" onClick={handleAddPrescribedProduct}>Add More</button>
+        </div>
 
-{/* Section 4: Targeted Products */}
-<div className="section">
-  <h2>Targeted Products</h2>
-  {targetedProducts.map((product, index) => (
-    <div key={index} className="form-group">
-      <label>Product Name:</label>
-      <Select
-        value={productsList.find(option => option.label === product.productName)}
-        onChange={(selectedOption) => handleTargetedProductChange(selectedOption, index)}
-        options={productsList}
-        placeholder="Select Product"
-        
-        isSearchable
-      />
-    </div>
-  ))}
-  <button type="button" onClick={handleAddTargetedProduct}>Add More</button>
-</div>
+        {/* Section 4: Targeted Products */}
+        <div className="section">
+          <h2>Targeted Products</h2>
+          {targetedProducts.map((product, index) => (
+            <div key={index} className="form-group">
+              <label>Product Name:</label>
+              <Select
+                value={productsList.find(option => option.label === product.productName)}
+                onChange={(selectedOption) => handleTargetedProductChange(selectedOption, index)}
+                options={productsList}
+                placeholder="Select Product"
+                isSearchable
+              />
+            </div>
+          ))}
+          <button type="button" onClick={handleAddTargetedProduct}>Add More</button>
+        </div>
 
         {/* Section 5: Last Year Amount */}
         <div className="section">
@@ -464,55 +471,55 @@ const statusColor = getStatusColor();
 
         {/* Section 7: Total Business */}
         <div className="section">
-        <h2>Total Business</h2>
-        <div className="form-group">
-          <label>Total Business:</label>
-          <input
-            type="text"
-            value={totalBusiness}
-            readOnly
-          />
-        </div>
-        <div className="form-group">
-          <label>Percentage:</label>
-          <input
-            type="text"
-            value={`${percentage}%`}
-            readOnly
-          />
-        </div>
-        <div className="form-group">
-          <label>Expected Amount:</label>
-          <input
-            type="text"
-            value={expectedAmount}
-            readOnly
-          />
-        </div>
-        <div className="form-group">
-          <label>Status:</label>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <div style={{
-              width: '10px',
-              height: '10px',
-              borderRadius: '50%',
-              backgroundColor: statusColor,
-              marginRight: '8px'
-            }} />
-            <span>
-              {statusColor === 'red' ? 'Bad' : 
-               statusColor === 'orange' ? 'Better' : 
-               statusColor === 'yellow' ? 'Average' : 
-               'Good'}
-            </span>
+          <h2>Total Business</h2>
+          <div className="form-group">
+            <label>Total Business:</label>
+            <input
+              type="text"
+              value={totalBusiness}
+              readOnly
+            />
           </div>
+          <div className="form-group">
+            <label>Percentage:</label>
+            <input
+              type="text"
+              value={`${percentage}%`}
+              readOnly
+            />
+          </div>
+          <div className="form-group">
+            <label>Expected Amount:</label>
+            <input
+              type="text"
+              value={expectedAmount}
+              readOnly
+            />
+          </div>
+          <div className="form-group">
+            <label>Status:</label>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <div style={{
+                width: '10px',
+                height: '10px',
+                borderRadius: '50%',
+                backgroundColor: statusColor,
+                marginRight: '8px'
+              }} />
+              <span>
+                {statusColor === 'red' ? 'Bad' : 
+                 statusColor === 'orange' ? 'Better' : 
+                 statusColor === 'yellow' ? 'Average' : 
+                 'Good'}
+              </span>
+              </div>
         </div>
         </div>
 
-        <button type="submit" className="submit-button">Submit Report</button>
+        <button type="submit" className="submit-button">Update</button>
       </form>
     </div>
   );
 }
 
-export default Create;
+export default UpdateReport;

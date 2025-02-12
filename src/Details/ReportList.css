@@ -1,0 +1,117 @@
+/* ReportList.css */
+
+.allreport-container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow-x: auto;
+}
+
+.allreport-title {
+  text-align: center;
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+
+
+.allreport-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+}
+
+.allreport-table thead {
+  background: #007bff;
+  color: #fff;
+}
+
+.allreport-table th {
+  padding: 12px;
+  text-align: left;
+}
+
+.allreport-table tbody tr {
+  border-bottom: 1px solid #ddd;
+  transition: background 0.3s ease-in-out;
+}
+
+.allreport-table tbody tr:hover {
+  background: rgba(0, 123, 255, 0.1);
+}
+
+.allreport-table td {
+  padding: 12px;
+}
+
+.allreport-view-button,
+.allreport-delete-button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: none;
+  margin-right: 5px;
+  transition: all 0.3s ease-in-out;
+}
+
+.allreport-view-button {
+  background: #28a745;
+  color: white;
+}
+
+.allreport-view-button:hover {
+  background: #218838;
+}
+
+.allreport-delete-button {
+  background: #dc3545;
+  color: white;
+}
+
+.allreport-delete-button:hover {
+  background: #c82333;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+  .allreport-container {
+    width: 95%;
+    padding: 15px;
+  }
+
+  .allreport-table {
+    font-size: 14px;
+  }
+
+  .allreport-table th,
+  .allreport-table td {
+    padding: 10px;
+  }
+
+  .allreport-view-button,
+  .allreport-delete-button {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .allreport-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .allreport-view-button,
+  .allreport-delete-button {
+    padding: 5px 8px;
+    font-size: 12px;
+  }
+}

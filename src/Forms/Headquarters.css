@@ -1,0 +1,100 @@
+.headquarters-container {
+    padding: 20px;
+  }
+  
+  .headquarters-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .headquarters-add-button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .headquarters-form {
+    margin-bottom: 20px;
+  }
+  
+  .headquarters-form-group {
+    margin-bottom: 10px;
+  }
+  
+  .headquarters-input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+  }
+  
+  .staff-form-group {
+    margin-bottom: 10px;
+  }
+  
+  .staff-input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+  }
+  
+  .add-staff-button {
+    padding: 5px 10px;
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .headquarters-submit-button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .headquarters-search {
+    margin-bottom: 20px;
+  }
+  
+  .headquarters-search-input {
+    width: 100%;
+    padding: 8px;
+  }
+  
+  .headquarters-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .headquarters-table th, .headquarters-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .headquarters-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .headquarters-update-button, .headquarters-delete-button, .headquarters-save-button, .headquarters-cancel-button {
+    padding: 5px 10px;
+    margin-right: 5px;
+    cursor: pointer;
+  }
+  
+  .headquarters-pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .headquarters-pagination-button {
+    padding: 5px 10px;
+    margin-right: 5px;
+    cursor: pointer;
+  }

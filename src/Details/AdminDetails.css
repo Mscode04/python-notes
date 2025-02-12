@@ -1,0 +1,64 @@
+.admindetails-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .admindetails-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .admindetails-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+  }
+  
+  .admindetails-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .admindetails-table th, .admindetails-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .admindetails-table th {
+    background-color: #f4f4f4;
+  }
+  
+  .admindetails-no-data {
+    text-align: center;
+    font-weight: bold;
+    padding: 20px;
+  }
+  
+  .admindetails-delete-button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+  
+  .admindetails-delete-button:hover {
+    background-color: darkred;
+  }
+  
+  @media (max-width: 600px) {
+    .admindetails-table th, .admindetails-table td {
+      padding: 8px;
+      font-size: 14px;
+    }
+  
+    .admindetails-delete-button {
+      padding: 6px 10px;
+    }
+  }
+  

@@ -15,7 +15,7 @@ const BlankComponent = () => {
   const handleMouseDown = () => {
     holdTimeout = setTimeout(() => {
       navigate("/login");
-    }, 10000);
+    }, 4000);
   };
 
   const handleMouseUp = () => {

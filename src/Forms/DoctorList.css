@@ -2,7 +2,9 @@
 
 .doctor-list-container {
   padding: 20px;
-  max-width: 1200px;
+  max-width: 100vw;
+  height: 100vh;
+  background-color: #97cadb;
   margin: 0 auto;
 }
 
@@ -17,7 +19,7 @@
   display: inline-block;
   margin-bottom: 20px;
   padding: 10px 20px;
-  background-color: #007bff;
+  background-color: #02457a;
   color: #fff;
   text-decoration: none;
   border-radius: 4px;
@@ -25,7 +27,8 @@
 }
 
 .add-doctor-link:hover {
-  background-color: #0056b3;
+  background-color: #018abe;
+  color: white;
 }
 
 .doctor-table {
@@ -42,14 +45,12 @@
 }
 
 .doctor-table th {
-  background-color: #f8f9fa;
+  background-color: #02457a;
   font-weight: 600;
-  color: #333;
+  color: white;
 }
 
-.doctor-table tr:hover {
-  background-color: #f1f1f1;
-}
+
 
 .update-button,
 .delete-button {

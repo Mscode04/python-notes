@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { db } from "../Firebase/config";
-import { collection, addDoc, getDocs, doc, deleteDoc, updateDoc } from "firebase/firestore";
+import { collection, addDoc, getDocs } from "firebase/firestore";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Select from 'react-select';
 import './Doctor.css';
 import { Link } from 'react-router-dom';
+
 function Doctor() {
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
@@ -34,14 +35,17 @@ function Doctor() {
   const fetchHeadquarters = async () => {
     const querySnapshot = await getDocs(collection(db, "Headquarters"));
     const headquarters = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    setHeadquartersList(headquarters.map(hq => ({ value: hq.id, label: hq.place })));
+    setHeadquartersList(headquarters.map(hq => ({ value: hq.id, label: hq.place, staff: hq.staff })));
   };
 
   const handleHeadquartersChange = (selectedOption) => {
     setHeadquarters(selectedOption);
-    const selectedHeadquarter = headquartersList.find(hq => hq.value === selectedOption.value);
-    if (selectedHeadquarter && selectedHeadquarter.staff) {
-      setStaffList(selectedHeadquarter.staff.map(staff => ({ value: staff.name, label: staff.name })));
+    if (selectedOption && selectedOption.staff) {
+      const staffOptions = selectedOption.staff.map(staffMember => ({
+        value: staffMember.name,
+        label: staffMember.name,
+      }));
+      setStaffList(staffOptions);
     } else {
       setStaffList([]);
     }

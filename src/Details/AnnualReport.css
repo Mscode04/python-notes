@@ -1,10 +1,12 @@
 /* AnnualReport.css */
 
 .staffreport-annual-report-container {
-    max-width: 1200px;
+    max-width: 100vw;
+    height: 100vh;
     margin: 0 auto;
     padding: 20px;
     text-align: center;
+    background-color: #97cadb;
   }
   
   .staffreport-loading-container {
@@ -22,17 +24,19 @@
   }
   
   .staffreport-staff-year-card {
-    background: #f8f9fa;
+    background: #018abe;
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     text-decoration: none;
-    color: #333;
+    color: #b6e8ee;
     transition: transform 0.3s ease;
   }
   
   .staffreport-staff-year-card:hover {
     transform: translateY(-5px);
+    color: #f8f8f8;
+
   }
   
   @media (max-width: 768px) {

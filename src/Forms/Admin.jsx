@@ -58,10 +58,8 @@ function Admin() {
       />
 
       <div className="adminreg-header">
-        {/* Back button with navigate(-1) */}
-        <button className="adminreg-back-button" onClick={() => navigate(-1)}>
-          <i className="bi bi-arrow-left"></i>
-        </button>
+
+
         <h1 className="adminreg-title">Admin Registration</h1>
       </div>
 

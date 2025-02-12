@@ -42,9 +42,10 @@ function ReportList() {
   };
 
   return (
+    <div className="getyt">
     <div className="allreport-container">
       <ToastContainer />
-      <h1>All Reports</h1>
+      <h1>Reports</h1>
       {loading ? (
         <div className='loading-container'>
           <img src="https://i.pinimg.com/originals/65/ba/48/65ba488626025cff82f091336fbf94bb.gif" alt="Loading..." />
@@ -85,6 +86,7 @@ function ReportList() {
           </tbody>
         </table>
       )}
+    </div>
     </div>
   );
 }

@@ -3,9 +3,10 @@
 .allreport-container {
   width: 90%;
   max-width: 1200px;
-  margin: 20px auto;
+  margin:  auto;
+  
   padding: 20px;
-  background: #fff;
+  background: #97cadb;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   overflow-x: auto;
@@ -27,7 +28,7 @@
 }
 
 .allreport-table thead {
-  background: #007bff;
+  background: #02457a;
   color: #fff;
 }
 
@@ -35,7 +36,11 @@
   padding: 12px;
   text-align: left;
 }
-
+.getyt{
+  background-color: #d6e8ee;
+  height: 100vh;
+  padding-top: 20px;
+}
 .allreport-table tbody tr {
   border-bottom: 1px solid #ddd;
   transition: background 0.3s ease-in-out;
@@ -114,4 +119,7 @@
     padding: 5px 8px;
     font-size: 12px;
   }
+}
+.loading-container img{
+  height: 100px;
 }

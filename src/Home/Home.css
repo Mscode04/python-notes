@@ -3,10 +3,10 @@ body {
   font-family: 'Poppins', sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f8f9fa;
 }
 
 .HomeApp {
+  background-color: #024579;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -17,8 +17,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: start;
-  background: #007bff;
-  padding: 10px 20px;
+  background:  #001b48;;
   color: white;
 }
 
@@ -35,7 +34,7 @@ body {
 
 .HomeTitle {
   text-align: center;
-  color: #343a40;
+  color: #d6e8ee;
   font-size: 24px;
   font-weight: 600;
 }
@@ -51,7 +50,7 @@ body {
 .SectionTitle {
   font-size: 18px;
   font-weight: 500;
-  color: #007bff;
+  color: #018abe;
   margin-bottom: 15px;
 }
 
@@ -69,15 +68,15 @@ body {
   align-items: center;
   justify-content: center;
   padding: 15px;
-  background: #e9ecef;
+  background: #d6e8ee;
   border-radius: 8px;
   text-decoration: none;
-  color: #212529;
+  color: #001b48;
   transition: all 0.3s;
 }
 
 .IconItem:hover {
-  background: #007bff;
+  background: #97cadb;
   color: white;
 }
 

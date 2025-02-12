@@ -30,7 +30,7 @@ function Area() {
     e.preventDefault();
     setLoading(true);
     try {
-      await addDoc(collection(db, "Area"), { name });
+      await addDoc(collection(db, "Areas"), { name });
       toast.success('Area added successfully!');
       setName('');
       fetchAreas();
@@ -67,7 +67,14 @@ function Area() {
   return (
     <div className="area-container">
       <ToastContainer position="top-center" autoClose={3000} hideProgressBar />
-      <button className="back-button" onClick={() => navigate(-1)}>Back</button>
+      <button
+  className="adminreg-back-button"
+  onClick={() => navigate(-1)}
+  style={{ color: "blue", backgroundColor: "transparent", border: "none" }}
+>
+  <i className="bi bi-arrow-left"></i>
+</button>
+
       <h1>Area Management</h1>
       
       <form onSubmit={handleAddArea} className="area-form">

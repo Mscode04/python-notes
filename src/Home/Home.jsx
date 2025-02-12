@@ -66,7 +66,7 @@ function Home() {
               <i className="bi bi-geo-alt-fill"></i>
               <span>Area</span>
             </Link>
-            <Link to="/admin-details" className="IconItem">
+            <Link to="/main/admin-details" className="IconItem">
               <i className="bi bi-person-gear"></i>
               <span>Admin</span>
             </Link>

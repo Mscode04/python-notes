@@ -1,29 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FaLightbulb } from "react-icons/fa";
+import "./TorchComponent.css";
 
 const BlankComponent = () => {
+  const [isOn, setIsOn] = useState(false);
   const navigate = useNavigate();
+  let holdTimeout;
 
-  const handleGoClick = () => {
-    navigate("/login");
+  const handleTorchClick = () => {
+    setIsOn(prev => !prev);
+  };
+
+  const handleMouseDown = () => {
+    holdTimeout = setTimeout(() => {
+      navigate("/login");
+    }, 10000);
+  };
+
+  const handleMouseUp = () => {
+    clearTimeout(holdTimeout);
   };
 
   return (
-    <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h1>Welcome to the App</h1>
-      <button
-        onClick={handleGoClick}
-        style={{
-          padding: "10px 20px",
-          backgroundColor: "#007bff",
-          color: "#fff",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer",
-        }}
+    <div className={`torch-container ${isOn ? "light" : "dark"}`}>
+      <h1 className="app-title">Welcome to the App</h1>
+      <div 
+        className="torch-body" 
+        onClick={handleTorchClick}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+        onTouchStart={handleMouseDown}
+        onTouchEnd={handleMouseUp}
       >
-        Go to Login
-      </button>
+        <FaLightbulb className="torch-icon" />
+      </div>
     </div>
   );
 };

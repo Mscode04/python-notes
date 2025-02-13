@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { db } from '../Firebase/config';
-import { doc, getDoc ,deleteDoc} from 'firebase/firestore';
-import { useParams, Link, useNavigate } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import './ReportView.css'; // Import CSS for styling
-
+import React, { useState, useEffect } from "react";
+import { db } from "../Firebase/config";
+import { doc, getDoc } from "firebase/firestore";
+import { useParams, Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import * as XLSX from "xlsx";
+import "react-toastify/dist/ReactToastify.css";
+import "./ReportView.css";
+import { useNavigate } from 'react-router-dom';
 function ReportView() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -16,93 +19,269 @@ function ReportView() {
   }, [id]);
 
   const fetchReport = async () => {
-    const docRef = doc(db, 'Reports', id);
+    const docRef = doc(db, "Reports", id);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       setReport({ id: docSnap.id, ...docSnap.data() });
     } else {
-      toast.error('Report not found');
+      toast.error("Report not found");
     }
   };
 
-  const handleDelete = async () => {
-    const pin = prompt('Enter PIN to confirm deletion:');
-    if (pin === '1234') { // Replace with your secure PIN logic
-      await deleteDoc(doc(db, 'Reports', id));
-      toast.success('Report deleted successfully');
-      navigate(-1); // Redirect to list page
-    } else {
-      toast.error('Incorrect PIN. Deletion canceled.');
+  // Utility function to format YYYY-MM to MMM-YYYY
+  const formatDate = (dateString) => {
+    const [year, month] = dateString.split("-");
+    const date = new Date(year, month - 1); // Month is 0-indexed in JavaScript Date
+    return date.toLocaleString("default", { month: "short", year: "numeric" });
+  };
+
+  const exportToPDF = () => {
+    const doc = new jsPDF();
+    doc.setFontSize(18);
+    doc.setTextColor(40, 53, 147);
+    doc.text(`${report.staff} - Dr.${report.doctorName}`, 20, 20);
+  
+    // Add status circle
+    const statusColor = getStatusColor(report.status);
+    doc.setFillColor(statusColor);
+    doc.circle(190, 15, 5, "F");
+  
+    let startY = 25;
+    const tableWidth = 170; // Total width based on 210mm page with 20mm margins
+  
+    const addSectionHeader = (text) => {
+      doc.setFontSize(12);
+      doc.setTextColor(0, 0, 0);
+      doc.setFillColor(211, 211, 211);
+  
+      // Draw background rectangle spanning the full table width
+      doc.rect(20, startY, tableWidth, 10, "F");
+      doc.text(text, 25, startY + 7);
+  
+      startY += 10;
+    };
+  
+    const addTable = (data) => {
+      doc.autoTable({
+        startY: startY,
+        body: data,
+        alternateRowStyles: { fillColor: [245, 245, 245] },
+        styles: { cellPadding: 2, fontSize: 10, valign: "middle" },
+        columnStyles: {
+          0: { cellWidth: 60, fillColor: [240, 240, 240], textColor: [0, 0, 0] },
+          1: { cellWidth: "auto", fillColor: [255, 255, 255], textColor: [0, 0, 0] },
+        },
+        margin: { left: 20, right: 20 }, // Ensure table uses full width
+      });
+      startY = doc.autoTable.previous.finalY +0;
+    };
+  
+    // General Information Section
+    addSectionHeader("General Information");
+    addTable([
+      ["Report Year", report.reportOfYear],
+      ["Staff", report.staff],
+      ["Status", report.status],
+      ["Doctor Name", report.doctorName],
+      ["Address", report.address],
+      ["Phone", report.phone],
+      ["Designation", report.designation],
+      ["Area", report.area],
+      ["Headquarters", report.headquarters],
+    ]);
+  
+    // Activity Details Section
+    addSectionHeader("Activity Details");
+    addTable([
+      ["Activity Month", report.activityMonth],
+      ["Activity Amount", report.activityAmount],
+      ["Target Times", report.targetedTimes],
+      ["MR", report.mr],
+      ["ABM", report.abm],
+      ["RSM", report.rsm],
+    ]);
+  
+    // Monthly Sales Section
+    if (report.dynamicFields) {
+      addSectionHeader("Monthly Sales");
+      const monthlySalesData = report.dynamicFields.map((field) => [
+        formatDate(field.date),
+        field.amount,
+      ]);
+      addTable(monthlySalesData);
+    }
+  
+    // Product Items Section
+    addSectionHeader("Product Items");
+    const productItemsData = [];
+    if (report.targetedProducts) {
+      productItemsData.push(["Targeted Products", report.targetedProducts.join(", ")]);
+    }
+    if (report.prescribedProducts) {
+      productItemsData.push(["Prescribed Products", report.prescribedProducts.join(", ")]);
+    }
+    if (productItemsData.length > 0) {
+      addTable(productItemsData);
+    }
+  
+    // Total Business Section
+    addSectionHeader("Total Business");
+    addTable([
+      ["Total Business", report.totalBusiness],
+      ["Expected Amount", report.expectedAmount],
+      ["Percentage", `${report.percentage}%`],
+    ]);
+  
+    doc.save(`Report_${report.staff}.pdf`);
+  };
+  const exportToExcel = () => {
+    const worksheetData = {
+      "Report Year": report.reportOfYear,
+      "Staff": report.staff,
+      "HQ": report.headquarters,
+      "Doctor Name": report.doctorName,
+      "Address": report.address,
+      "Phone": report.phone,
+      "Designation": report.designation,
+      "Area": report.area,
+      "Month": report.activityMonth,
+      "Day": report.activityDay,
+      "Amount": report.activityAmount,
+      "MR": report.mr,
+      "ABM": report.abm,
+      "RSM": report.rsm,
+      ...(report.targetedProducts && { "Targeted Products": report.targetedProducts.join(", ") }),
+      ...(report.prescribedProducts && { "Prescribed Products": report.prescribedProducts.join(", ") }),
+      "Targeted Times": report.targetedTimes,
+      "Last Year Amount": report.lastYearAmount,
+      ...(report.dynamicFields && report.dynamicFields.reduce((acc, field, index) => {
+        acc[`Month ${index + 1} `] = formatDate(field.date);
+        acc[`Amount ${index + 1}`] = field.amount;
+        return acc;
+      }, {})),
+      "Total Business": report.totalBusiness,
+      "Percentage": `${report.percentage}%`,
+      "Expected Amount": report.expectedAmount,
+      "Status": report.status,
+    };
+
+    const worksheet = XLSX.utils.json_to_sheet([worksheetData]);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Report");
+
+    // Add some basic styling to the Excel sheet
+    const headerRange = XLSX.utils.decode_range(worksheet["!ref"]);
+    for (let C = headerRange.s.c; C <= headerRange.e.c; ++C) {
+      const cellAddress = XLSX.utils.encode_cell({ r: 0, c: C });
+      if (!worksheet[cellAddress]) continue;
+      worksheet[cellAddress].s = {
+        fill: { fgColor: { rgb: "283593" } }, // Dark blue background
+        font: { color: { rgb: "FFFFFF" }, bold: true }, // White text, bold
+      };
+    }
+
+    XLSX.writeFile(workbook, `Report_${report.staff}.xlsx`);
+  };
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "Very Good":
+        return "#90EE90"; // Light green
+      case "Good":
+        return "#32CD32"; // Green
+      case "Bad":
+        return "#FFA500"; // Orange
+      case "Very Bad":
+        return "#FF0000"; // Red
+      default:
+        return "#808080"; // Gray
     }
   };
 
-  if (!report) return <div>Loading...</div>;
+  if (!report) return <div><div className='loading-container'>
+  <img src="https://i.pinimg.com/originals/65/ba/48/65ba488626025cff82f091336fbf94bb.gif" alt="" />
+</div></div>;
 
   return (
     <div className="view-report-container">
       <ToastContainer />
-      <h1>Report Details</h1>
-      <div className="report-details">
-        <h2>General Details</h2>
-        <p>Report Year: {report.reportOfYear}</p>
-
-        <h2>Doctor Details</h2>
-        <p>Doctor Name: {report.doctorName}</p>
-        <p>Address: {report.address}</p>
-        <p>Phone: {report.phone}</p>
-        <p>Designation: {report.designation}</p>
-        <p>Area: {report.area}</p>
-        <p>Headquarters: {report.headquarters}</p>
-        <p>Staff: {report.staff}</p>
-
-        <h2>Activity Details</h2>
-        <p>Month: {report.activityMonth}</p>
-        <p>Day: {report.activityDay}</p>
-        <p>Amount: {report.activityAmount}</p>
-        <p>MR: {report.mr}</p>
-        <p>ABM: {report.abm}</p>
-        <p>RSM: {report.rsm}</p>
-        <p>Targeted Times: {report.targetedTimes}</p>
-
-        <h2>Prescribed Products</h2>
-        <ul>
-          {report.prescribedProducts.map((product, index) => (
-            <li key={index}>{product}</li>
-          ))}
-        </ul>
-
-        <h2>Targeted Products</h2>
-        <ul>
-          {report.targetedProducts.map((product, index) => (
-            <li key={index}>{product}</li>
-          ))}
-        </ul>
-
-        <h2>Last Year Amount</h2>
-        <p>Amount: {report.lastYearAmount}</p>
-
-        <h2>Dynamic Date and Amount</h2>
-        <ul>
-          {report.dynamicFields.map((field, index) => (
-            <li key={index}>
-              Date: {field.date}, Amount: {field.amount}
-            </li>
-          ))}
-        </ul>
-
-        <h2>Calculated Fields</h2>
-        <p>Total Business: {report.totalBusiness}</p>
-        <p>Percentage: {report.percentage}%</p>
-        <p>Expected Amount: {report.expectedAmount}</p>
-        <p>Status: {report.status}</p>
-      </div>
+      <button onClick={() => navigate(-1)} className="back-button"><i className="bi bi-arrow-left"></i></button>
+      <h1>Report Dr.{report.doctorName}</h1>
+      <table className="report-table">
+        <thead>
+          <tr>
+            <th className="bg-info first">Field</th>
+            <th className="bg-info first2">Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Report Year</td><td>{report.reportOfYear}</td></tr>
+          <tr><td>Staff</td><td>{report.staff}</td></tr>
+          <tr>
+            <td>Status</td>
+            <td>
+              <button className="disable"
+                style={{ 
+                  backgroundColor: getStatusColor(report.status)}} 
+                title={report.status}
+              ></button>
+            </td>
+          </tr>
+          <tr><td>Doctor Name</td><td>{report.doctorName}</td></tr>
+          <tr><td>Address</td><td>{report.address}</td></tr>
+          <tr><td>Phone</td><td>{report.phone}</td></tr>
+          <tr><td>Designation</td><td>{report.designation}</td></tr>
+          <tr><td>Area</td><td>{report.area}</td></tr>
+          <tr><td>Headquarters</td><td>{report.headquarters}</td></tr>
+          
+          <tr><td colSpan="2" className="bg-info"><strong>Activity Details</strong></td></tr>
+          <tr><td>Activity Month</td><td>{report.activityMonth}</td></tr>
+          <tr><td>Activity Amount</td><td>{report.activityAmount}</td></tr>
+          <tr><td>Target Times</td><td>{report.targetedTimes}</td></tr>
+          <tr><td>MR</td><td>{report.mr}</td></tr>
+          <tr><td>ABM</td><td>{report.abm}</td></tr>
+          <tr><td>RSM</td><td>{report.rsm}</td></tr>
+          {report.dynamicFields && (
+            <>
+              <tr><td colSpan="2" className="bg-info"><strong>Monthly Sales</strong></td></tr>
+              {report.dynamicFields.map((field, index) => (
+                <tr key={index}>
+                  <td>{formatDate(field.date)}</td>
+                  <td>{field.amount}</td>
+                </tr>
+              ))}
+            </>
+          )}
+          <tr><td colSpan="2" className="bg-info"><strong>Product Items</strong></td></tr>
+          {report.targetedProducts && (
+            <tr><td>Targeted Products</td><td>{report.targetedProducts.join(", ")}</td></tr>
+          )}
+          {report.prescribedProducts && (
+            <tr><td>Prescribed Products</td><td>{report.prescribedProducts.join(", ")}</td></tr>
+          )}
+          <tr><td colSpan="2" className="bg-info"><strong>Total Business</strong></td></tr>
+          <tr><td>Total Business</td><td>{report.totalBusiness}</td></tr>
+          <tr><td>Expected Amount</td><td>{report.expectedAmount}</td></tr>
+          <tr><td >Percentage</td><td>{report.percentage} %</td></tr>
+          <tr><td >Activity Status</td><td>{report.status}</td></tr>
+          <tr>
+            <td className="last">Status</td>
+            <td className="last2">
+              <button 
+                style={{ 
+                  backgroundColor: getStatusColor(report.status)}} 
+                title={report.status}
+                
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
       <div className="actions">
-        <Link to={`/main/update-report/${report.id}`} className="update-button">
-          Update
-        </Link>
-        <button onClick={handleDelete} className="delete-button">
-          Delete
-        </button>
+        <button onClick={exportToPDF} className="export-btn">Download PDF</button>
+        <button onClick={exportToExcel} className="export-btn">Download Excel</button>
+        <button className="export-btn">  <Link to={`/main/update-report/${report.id}`} className="export-btn">Update</Link></button>
+      
       </div>
     </div>
   );

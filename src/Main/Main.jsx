@@ -10,7 +10,7 @@ import Admin from "../Forms/Admin";
 import Product from "../Forms/Product";
 import Headquarters from "../Forms/Headquarters";
 import Create from "../Details/Create";
-import SingleReport from "../Details/SingleReport";
+
 import AnnualReport from "../Details/AnnualReport";
 import DoctorList from "../Forms/DoctorList";
 import UpdateDoctor from "../Forms/UpdateDoctor";
@@ -38,8 +38,7 @@ function Main({ isAuthenticated }) {
           <Route path="/admin-details" element={<AdminDetails />} />
           <Route path="/product" element={<Product />} />
           <Route path="/headquarters" element={<Headquarters />} />
-          <Route path="/create" element={<Create />} />
-          <Route path="/single-report" element={<SingleReport />} />
+          <Route path="/create" element={<Create />} />       
           <Route path="/annual-report" element={<AnnualReport />} />
           <Route path="/doctor-list" element={<DoctorList />} />
           <Route path="/update-doctor/:id" element={<UpdateDoctor />} />

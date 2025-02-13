@@ -1,13 +1,19 @@
 {
   "files": {
-    "main.css": "/python-notes/static/css/main.1618c032.css",
-    "main.js": "/python-notes/static/js/main.5210f25b.js",
+    "main.css": "/python-notes/static/css/main.374f38ef.css",
+    "main.js": "/python-notes/static/js/main.2fdb45f3.js",
+    "static/js/239.0a3d86c3.chunk.js": "/python-notes/static/js/239.0a3d86c3.chunk.js",
+    "static/js/213.96320009.chunk.js": "/python-notes/static/js/213.96320009.chunk.js",
+    "static/js/455.31109f6c.chunk.js": "/python-notes/static/js/455.31109f6c.chunk.js",
     "index.html": "/python-notes/index.html",
-    "main.1618c032.css.map": "/python-notes/static/css/main.1618c032.css.map",
-    "main.5210f25b.js.map": "/python-notes/static/js/main.5210f25b.js.map"
+    "main.374f38ef.css.map": "/python-notes/static/css/main.374f38ef.css.map",
+    "main.2fdb45f3.js.map": "/python-notes/static/js/main.2fdb45f3.js.map",
+    "239.0a3d86c3.chunk.js.map": "/python-notes/static/js/239.0a3d86c3.chunk.js.map",
+    "213.96320009.chunk.js.map": "/python-notes/static/js/213.96320009.chunk.js.map",
+    "455.31109f6c.chunk.js.map": "/python-notes/static/js/455.31109f6c.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.1618c032.css",
-    "static/js/main.5210f25b.js"
+    "static/css/main.374f38ef.css",
+    "static/js/main.2fdb45f3.js"
   ]
 }

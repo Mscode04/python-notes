@@ -272,10 +272,10 @@ function Headquarters() {
       <div className="headquarters-search">
         <input
           type="text"
-          placeholder="Search headquarters..."
+          placeholder="Search HQ..."
           value={searchTerm}
           onChange={handleSearch}
-          className="headquarters-search-input"
+          className="headquarters-search-input form-control"
         />
       </div>
 
@@ -374,10 +374,10 @@ function Headquarters() {
           <td>
             {editingHeadquarter?.id === headquarter.id ? (
               <>
-                <button className="headquarters-save-button" onClick={() => handleUpdateHeadquarter(editingHeadquarter)}>
+                <button className="headquarters-save-button btn btn-success" onClick={() => handleUpdateHeadquarter(editingHeadquarter)}>
                   Save
                 </button>
-                <button className="headquarters-cancel-button" onClick={() => setEditingHeadquarter(null)}>
+                <button className="headquarters-cancel-button btn btn-danger" onClick={() => setEditingHeadquarter(null)}>
                   Cancel
                 </button>
               </>

@@ -92,7 +92,9 @@
   
   border-radius: 20px;
 }
-
+button{
+  border-radius: 20px;
+}
 .headquarters-table {
   width: 100%;
   border-collapse: collapse;

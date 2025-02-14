@@ -173,10 +173,11 @@ function Create() {
         totalBusiness,
         percentage,
         expectedAmount,
-        status: statusColor === 'red' ? 'Bad' : 
-                statusColor === 'orange' ? 'Better' : 
-                statusColor === 'yellow' ? 'Average' : 
-                'Good'
+        status: statusColor === 'very-bad' ? 'Very Bad' :
+        statusColor === 'bad' ? 'Bad' :
+        statusColor === 'good' ? 'Good' :
+        statusColor === 'very-good' ? 'Very Good' :
+        'Reload'
       };
   
       // Add the report data to the "Reports" collection in Firestore

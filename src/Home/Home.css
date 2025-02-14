@@ -92,7 +92,7 @@ body {
   left: -250px;
   width: 250px;
   height: 100%;
-  background: #343a40;
+  background: #d6e8ee;
   color: white;
   padding: 20px;
   transition: left 0.3s;
@@ -108,7 +108,7 @@ body {
 .HomeDrawerCloseButton {
   background: transparent;
   border: none;
-  color: white;
+  color: #024579;
   font-size: 1.5rem;
   cursor: pointer;
   align-self: flex-start;
@@ -141,7 +141,7 @@ body {
 .powered-by {
   font-size: 12px;
   margin-top: 10px;
-  color: #adb5bd;
+  color: #024579;
   margin-bottom: 70px;
 }
 

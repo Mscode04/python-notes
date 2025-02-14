@@ -137,9 +137,9 @@ function Product() {
       <button className="adminreg-back-button" style={{ color: "#d6e8ee", backgroundColor: "transparent", border: "none" }} onClick={() => navigate(-1)}>
           <i className="bi bi-arrow-left"></i>
         </button>
-        <h1 className="product-title">Product Management</h1>
+        <h1 className="product-title">Products</h1>
         <button className="product-add-button" onClick={() => setShowAddForm(!showAddForm)}>
-          {showAddForm ? 'Hide Form' : 'Add New Product'}
+          {showAddForm ? 'Hide Form' : 'Add New'}
         </button>
       </div>
 

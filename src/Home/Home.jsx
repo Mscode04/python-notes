@@ -23,7 +23,7 @@ function Home() {
         </button>
       </header>
       <div className="HomeContent">
-        <h2 className="HomeTitle">Home</h2>
+        <h2 className="HomeTitle">Dashboard</h2>
 
         <div className="HomeSection">
           <h3 className="SectionTitle">Reports</h3>
@@ -99,7 +99,7 @@ function Home() {
           <button className="btn btn-danger mb-5" onClick={handleLogout}>
             Logout
           </button>
-          <div className="powered-by" style={{color:"#97cadb"}}>Powered by <a href="https://neuraq.in/" className="text-decoration-none" style={{color:"#43dd11"}}>Neuraq Technologies</a></div>
+          <div className="powered-by" style={{color:"#024579"}}>Powered by <a href="https://neuraq.in/" className="text-decoration-none" style={{color:"#43dd11"}}>Neuraq Technologies</a></div>
         </div>
       </div>
     </div>

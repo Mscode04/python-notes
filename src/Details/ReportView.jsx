@@ -44,7 +44,7 @@ function ReportView() {
     // Add status circle
     const statusColor = getStatusColor(report.status);
     doc.setFillColor(statusColor);
-    doc.circle(190, 15, 5, "F");
+    doc.circle(190, 15, 2, "F");
   
     let startY = 25;
     const tableWidth = 170; // Total width based on 210mm page with 20mm margins
@@ -186,15 +186,15 @@ function ReportView() {
   const getStatusColor = (status) => {
     switch (status) {
       case "Very Good":
-        return "#90EE90"; // Light green
+        return "green"; // Light green
       case "Good":
-        return "#32CD32"; // Green
+        return "yellow"; // Green
       case "Bad":
-        return "#FFA500"; // Orange
+        return "orenge"; // Orange
       case "Very Bad":
-        return "#FF0000"; // Red
+        return "red"; // Red
       default:
-        return "#808080"; // Gray
+        return "blue"; // Gray (for 'Reload' or unknown status)
     }
   };
 
@@ -219,7 +219,7 @@ function ReportView() {
           <tr><td>Staff</td><td>{report.staff}</td></tr>
           <tr>
             <td>Status</td>
-            <td>
+            <td className="Staus-btn">
               <button className="disable"
                 style={{ 
                   backgroundColor: getStatusColor(report.status)}} 
@@ -266,7 +266,7 @@ function ReportView() {
           <tr><td >Activity Status</td><td>{report.status}</td></tr>
           <tr>
             <td className="last">Status</td>
-            <td className="last2">
+            <td className="last2 Staus-btn">
               <button 
                 style={{ 
                   backgroundColor: getStatusColor(report.status)}} 

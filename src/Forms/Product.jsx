@@ -134,7 +134,7 @@ function Product() {
       />
 
       <div className="product-header">
-      <button className="adminreg-back-button" onClick={() => navigate(-1)}>
+      <button className="adminreg-back-button" style={{ color: "#d6e8ee", backgroundColor: "transparent", border: "none" }} onClick={() => navigate(-1)}>
           <i className="bi bi-arrow-left"></i>
         </button>
         <h1 className="product-title">Product Management</h1>
@@ -166,7 +166,7 @@ function Product() {
             />
           </div>
           <button type="submit" className="product-submit-button" disabled={loading}>
-            {loading ? 'Adding...' : 'Add Product'}
+            {loading ? 'Adding...' : 'Save'}
           </button>
         </form>
       )}

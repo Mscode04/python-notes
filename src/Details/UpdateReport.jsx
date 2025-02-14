@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { db } from "../Firebase/config";
-import { doc, getDoc, updateDoc,collection,getDocs } from "firebase/firestore";
+import { doc, getDoc, updateDoc, collection, getDocs } from "firebase/firestore";
 import Select from 'react-select';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -12,7 +12,7 @@ function UpdateReport() {
 
   // Section 0: General Details
   const [reportOfYear, setReportOfYear] = useState('');
-
+  const navigate=useNavigate()
   // Section 1: Doctor Details
   const [doctorName, setDoctorName] = useState(null);
   const [address, setAddress] = useState('');
@@ -39,7 +39,7 @@ function UpdateReport() {
   const [prescribedProducts, setPrescribedProducts] = useState([{ productName: '' }]);
 
   // Section 4: Targeted Products
-  const [targetedProducts, setTargetedProducts] = useState([{ productName: ''}]);
+  const [targetedProducts, setTargetedProducts] = useState([{ productName: '' }]);
 
   // Section 5: Last Year Amount
   const [lastYearAmount, setLastYearAmount] = useState('');
@@ -184,15 +184,15 @@ function UpdateReport() {
         totalBusiness,
         percentage,
         expectedAmount,
-        status: statusColor === 'red' ? 'Bad' : 
-                statusColor === 'orange' ? 'Better' : 
-                statusColor === 'yellow' ? 'Average' : 
-                'Good'
+        status: statusColor === 'very-bad' ? 'Very Bad' :
+                statusColor === 'bad' ? 'Bad' :
+                statusColor === 'good' ? 'Good' :
+                statusColor === 'very-good' ? 'Very Good' :
+                'Reload'
       };
 
       await updateDoc(doc(db, "Reports", id), reportData);
       toast.success(`Report updated successfully with ID: ${id}`);
-      
     } catch (error) {
       console.error("Error updating document: ", error);
       toast.error("Failed to update report. Please try again.");
@@ -204,19 +204,24 @@ function UpdateReport() {
   // Calculate Expected Amount
   const expectedAmount = parseFloat(activityAmount || 0) * parseFloat(targetedTimes || 0);
   // Calculate Percentage
-  const percentage = totalBusiness === 0 ? 0 : ((parseFloat(totalBusiness || 0) / expectedAmount) * 100).toFixed(2);
+  const percentage = totalBusiness === 0 ? 0 : (parseFloat(totalBusiness || 0) / expectedAmount) * 100;
 
   // Determine Status
   const getStatusColor = () => {
-    if (percentage >= 75) return 'green';
-    if (percentage >= 50) return 'yellow';
-    if (percentage >= 25) return 'orange';
-    return 'red';
+    if (percentage > 100) return 'reload'; // Above 100%
+    if (percentage >= 75) return 'very-good'; // 75-100%
+    if (percentage >= 50) return 'good'; // 50-75%
+    if (percentage >= 25) return 'bad'; // 25-50%
+    return 'very-bad'; // Below 25%
   };
 
   const statusColor = getStatusColor();
 
   return (
+    <div className="cretemain">
+       <button className="adminreg-back-button" style={{ color: "#d6e8ee", backgroundColor: "transparent", border: "none" }} onClick={() => navigate(-1)}>
+          <i className="bi bi-arrow-left"></i>
+        </button>
     <div className="create-report-container">
       <ToastContainer
         position="top-center"
@@ -503,21 +508,28 @@ function UpdateReport() {
                 width: '10px',
                 height: '10px',
                 borderRadius: '50%',
-                backgroundColor: statusColor,
+                backgroundColor:
+                  statusColor === 'very-bad' ? 'red' :
+                  statusColor === 'bad' ? 'orange' :
+                  statusColor === 'good' ? 'yellow' :
+                  statusColor === 'very-good' ? 'green' :
+                  'blue', // For reload
                 marginRight: '8px'
               }} />
               <span>
-                {statusColor === 'red' ? 'Bad' : 
-                 statusColor === 'orange' ? 'Better' : 
-                 statusColor === 'yellow' ? 'Average' : 
-                 'Good'}
+                {statusColor === 'very-bad' ? 'Very Bad' :
+                 statusColor === 'bad' ? 'Bad' :
+                 statusColor === 'good' ? 'Good' :
+                 statusColor === 'very-good' ? 'Very Good' :
+                 'Reload'}
               </span>
-              </div>
-        </div>
+            </div>
+          </div>
         </div>
 
         <button type="submit" className="submit-button">Update</button>
       </form>
+    </div>
     </div>
   );
 }

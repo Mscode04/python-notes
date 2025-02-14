@@ -24,7 +24,7 @@ const BlankComponent = () => {
 
   return (
     <div className={`torch-container ${isOn ? "light" : "dark"}`}>
-      <h1 className="app-title">Welcome to the App</h1>
+      <h1 className="app-title" style={{ userSelect: "none" }}>Tap to Flash</h1>
       <div 
         className="torch-body" 
         onClick={handleTorchClick}

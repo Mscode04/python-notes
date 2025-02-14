@@ -36,6 +36,10 @@ function Home() {
               <i className="bi bi-calendar-check-fill"></i>
               <span>Annual Report</span>
             </Link>
+            <Link to="/main/breif-report" className="IconItem">
+              <i className="bi bi-calendar-check-fill"></i>
+              <span>Breif Report</span>
+            </Link>
             <Link to="/main/doctor-list" className="IconItem">
               <i className="bi bi-file-medical-fill"></i>
               <span>Doctor</span>
@@ -58,6 +62,10 @@ function Home() {
         <div className="HomeSection">
           <h3 className="SectionTitle">New Registrations</h3>
           <div className="IconGrid">
+            <Link to="/main/create" className="IconItem">
+              <i className="bi bi-file-earmark-plus-fill"></i>
+              <span>Create New Report</span>
+            </Link>
             <Link to="/main/doctor" className="IconItem">
               <i className="bi bi-person-plus-fill"></i>
               <span>Doctor</span>
@@ -78,10 +86,6 @@ function Home() {
               <i className="bi bi-buildings"></i>
               <span>HQ</span>
             </Link>
-            <Link to="/main/create" className="IconItem">
-              <i className="bi bi-file-earmark-plus-fill"></i>
-              <span>Create New Report</span>
-            </Link>
           </div>
         </div>
       </div>
@@ -92,10 +96,10 @@ function Home() {
         </button>
         
         <div className="drawer-footer">
-          <button className="HomeDrawerButton btn-danger mb-5" onClick={handleLogout}>
+          <button className="btn btn-danger mb-5" onClick={handleLogout}>
             Logout
           </button>
-          <div className="powered-by">Powered by Neuraq</div>
+          <div className="powered-by" style={{color:"#97cadb"}}>Powered by <a href="https://neuraq.in/" className="text-decoration-none" style={{color:"#43dd11"}}>Neuraq Technologies</a></div>
         </div>
       </div>
     </div>

@@ -5,11 +5,12 @@ import Select from 'react-select';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './Create.css'; // Import CSS for styling
+import { useNavigate } from 'react-router-dom';
 
 function Create() {
   // Section 0: General Details
   const [reportOfYear, setReportOfYear] = useState('');
-
+  const navigate=useNavigate()
   // Section 1: Doctor Details
   const [doctorName, setDoctorName] = useState('');
   const [address, setAddress] = useState('');
@@ -30,7 +31,7 @@ function Create() {
   const [mr, setMr] = useState('');
   const [abm, setAbm] = useState('');
   const [rsm, setRsm] = useState('');
-  const [targetedTimes, setTargetedTimes] = useState('');
+  const [targetedTimes, setTargetedTimes] = useState(3.5);
 
   // Section 3: Prescribed Products
   const [prescribedProducts, setPrescribedProducts] = useState([{ productName: '' }]);
@@ -198,15 +199,20 @@ const percentage = totalBusiness === 0 ? 0 : ((parseFloat( totalBusiness|| 0) /e
 
 // Determine Status
 const getStatusColor = () => {
-  if (percentage >= 75) return 'green';
-  if (percentage >= 50) return 'yellow';
-  if (percentage >= 25) return 'orange';
-  return 'red';
+  if (percentage > 100) return 'reload'; // Above 100%
+  if (percentage >= 75) return 'very-good'; // 75-100%
+  if (percentage >= 50) return 'good'; // 50-75%
+  if (percentage >= 25) return 'bad'; // 25-50%
+  return 'very-bad'; // Below 25%
 };
 
 const statusColor = getStatusColor();
 
   return (
+    <div className="cretemain">
+       <button className="adminreg-back-button" style={{ color: "#d6e8ee", backgroundColor: "transparent", border: "none" }} onClick={() => navigate(-1)}>
+          <i className="bi bi-arrow-left"></i>
+        </button>
     <div className="create-report-container">
       <ToastContainer
         position="top-center"
@@ -220,7 +226,7 @@ const statusColor = getStatusColor();
         pauseOnHover
       />
 
-      <h1 className="create-report-title">Create Report</h1>
+      <h1 className="create-report-title">New Report</h1>
 
       <form onSubmit={handleSubmit}>
         {/* Section 0: General Details */}
@@ -248,6 +254,7 @@ const statusColor = getStatusColor();
               options={doctorsList}
               placeholder="Select Doctor"
               isSearchable
+              required
             />
           </div>
           <div className="form-group">
@@ -256,7 +263,7 @@ const statusColor = getStatusColor();
               type="text"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
-              required
+              
             />
           </div>
           <div className="form-group">
@@ -265,7 +272,7 @@ const statusColor = getStatusColor();
               type="text"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              required
+              
             />
           </div>
           <div className="form-group">
@@ -274,7 +281,7 @@ const statusColor = getStatusColor();
               type="text"
               value={designation}
               onChange={(e) => setDesignation(e.target.value)}
-              required
+              
             />
           </div>
           <div className="form-group">
@@ -305,6 +312,7 @@ const statusColor = getStatusColor();
               options={staffList}
               placeholder="Select Staff"
               isSearchable
+              required
             />
           </div>
         </div>
@@ -322,14 +330,16 @@ const statusColor = getStatusColor();
 />
 
           </div>
+          <div className="div-hide-date">
           <div className="form-group">
             <label>Day:</label>
             <input
               type="text"
               value={activityDay}
               onChange={(e) => setActivityDay(e.target.value)}
-              required
+              
             />
+          </div>
           </div>
           <div className="form-group">
             <label>Amount:</label>
@@ -346,7 +356,7 @@ const statusColor = getStatusColor();
               type="text"
               value={mr}
               onChange={(e) => setMr(e.target.value)}
-              required
+              
             />
           </div>
           <div className="form-group">
@@ -355,7 +365,7 @@ const statusColor = getStatusColor();
               type="text"
               value={abm}
               onChange={(e) => setAbm(e.target.value)}
-              required
+              
             />
           </div>
           <div className="form-group">
@@ -364,7 +374,7 @@ const statusColor = getStatusColor();
               type="text"
               value={rsm}
               onChange={(e) => setRsm(e.target.value)}
-              required
+              
             />
           </div>
           <div className="form-group">
@@ -490,27 +500,34 @@ const statusColor = getStatusColor();
           />
         </div>
         <div className="form-group">
-          <label>Status:</label>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <div style={{
-              width: '10px',
-              height: '10px',
-              borderRadius: '50%',
-              backgroundColor: statusColor,
-              marginRight: '8px'
-            }} />
-            <span>
-              {statusColor === 'red' ? 'Bad' : 
-               statusColor === 'orange' ? 'Better' : 
-               statusColor === 'yellow' ? 'Average' : 
-               'Good'}
-            </span>
-          </div>
-        </div>
+  <label>Status:</label>
+  <div style={{ display: 'flex', alignItems: 'center' }}>
+    <div style={{
+      width: '10px',
+      height: '10px',
+      borderRadius: '50%',
+      backgroundColor: 
+        statusColor === 'very-bad' ? 'red' :
+        statusColor === 'bad' ? 'orange' :
+        statusColor === 'good' ? 'yellow' :
+        statusColor === 'very-good' ? 'green' :
+        'blue', // For reload
+      marginRight: '8px'
+    }} />
+    <span>
+      {statusColor === 'very-bad' ? 'Very Bad' : 
+       statusColor === 'bad' ? 'Bad' : 
+       statusColor === 'good' ? 'Good' : 
+       statusColor === 'very-good' ? 'Very Good' : 
+       'Reload'}
+    </span>
+  </div>
+</div>
         </div>
 
         <button type="submit" className="submit-button">Submit Report</button>
       </form>
+    </div>
     </div>
   );
 }

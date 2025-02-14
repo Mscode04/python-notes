@@ -1,93 +1,274 @@
-/* Area Management Page Styles */
+/* Product Management Page Styles */
+.product-container {
+  height: 100vh;
+  max-width: 100vw;
+  background-color: #024579;
+  padding: 15px;
+  padding-bottom: 30px;
+}
 
-.area-container {
-    width: 80%;
-    margin: auto;
-    text-align: center;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .back-button {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-bottom: 10px;
-  }
-  
-  .back-button:hover {
-    background-color: #0056b3;
-  }
-  
-  .area-form {
-    margin-bottom: 20px;
-  }
-  
-  .area-form input, .search-input {
+.product-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.product-title {
+  color: #d6e8ee;
+  font-size: 24px;
+  margin: 0;
+}
+
+.product-add-button {
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.product-add-button:hover {
+  background-color: #218838;
+}
+
+.product-form {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-form-group {
+  margin-bottom: 15px;
+}
+
+.product-form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #024579;
+  font-weight: bold;
+}
+
+.product-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.product-submit-button {
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.product-submit-button:hover {
+  background-color: #218838;
+}
+
+.product-search {
+  margin-bottom: 20px;
+}
+
+.product-search-input {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.product-table th, .product-table td {
+  border: 1px solid #0056b3;
+  padding: 12px;
+  text-align: left;
+}
+
+.product-table th {
+  background-color: #d6e8ee;
+  color: #024579;
+}
+
+.product-table td {
+  background-color: #fff;
+}
+
+.product-update-button {
+  background-color: #ffc107;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.product-update-button:hover {
+  opacity: 0.8;
+}
+
+.product-delete-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.product-delete-button:hover {
+  opacity: 0.8;
+}
+
+.product-save-button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.product-save-button:hover {
+  opacity: 0.8;
+}
+
+.product-cancel-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.product-cancel-button:hover {
+  opacity: 0.8;
+}
+
+.product-pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.product-pagination-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+  margin: 0 5px;
+}
+
+.product-pagination-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.product-pagination-button:hover:not(:disabled) {
+  opacity: 0.8;
+}
+
+.product-delete-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.product-delete-modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 400px;
+}
+
+.product-delete-modal-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+.product-delete-modal-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+  margin: 0 5px;
+}
+
+.product-delete-modal-button:first-of-type {
+  background-color: #dc3545;
+  color: white;
+}
+
+.product-delete-modal-button:last-of-type {
+  background-color: #ccc;
+}
+
+.product-delete-modal-button:hover {
+  opacity: 0.8;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .product-container {
     padding: 10px;
-    margin: 10px;
-    width: 60%;
-    border: 1px solid #ccc;
-    border-radius: 5px;
   }
-  
-  .area-table {
+
+  .product-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .product-table th, .product-table td {
+    min-width: 120px;
+  }
+
+  .product-search-input {
     width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    background-color: white;
   }
-  
-  .area-table th, .area-table td {
-    border: 1px solid #ddd;
-    padding: 12px;
-    text-align: left;
+
+  .product-delete-modal-content {
+    width: 90%;
   }
-  
-  .area-table th {
-    background-color: #007bff;
-    color: white;
-  }
-  
-  button {
-    padding: 8px 12px;
-    margin: 5px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  
-  button:hover {
-    opacity: 0.8;
-  }
-  
-  button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-  }
-  
-  .save-button {
-    background-color: #28a745;
-    color: white;
-  }
-  
-  .cancel-button {
-    background-color: #dc3545;
-    color: white;
-  }
-  
-  .update-button {
-    background-color: #ffc107;
-    color: black;
-  }
-  
-  .delete-button {
-    background-color: #dc3545;
-    color: white;
-  }
+}

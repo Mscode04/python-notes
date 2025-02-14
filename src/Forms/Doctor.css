@@ -6,10 +6,17 @@
     margin: 0 auto;
     padding: 20px;
     background-color: #97cadb;
+    
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
-  
+  .docter-main{
+    height: 100;
+    max-width: 100vw;
+    background-color: #024579;
+    padding: 10px;
+    padding-bottom: 0px;
+  }
   /* Title of the form */
   .doctor-title {
     text-align: center;

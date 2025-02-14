@@ -205,7 +205,7 @@ function ReportView() {
   return (
     <div className="view-report-container">
       <ToastContainer />
-      <button onClick={() => navigate(-1)} className="back-button"><i className="bi bi-arrow-left"></i></button>
+      <button onClick={() => navigate(-1)} className="back-button"><i className="bi bi-arrow-left"  style={{color:"#d6e8ee"}}></i></button>
       <h1>Report Dr.{report.doctorName}</h1>
       <table className="report-table">
         <thead>

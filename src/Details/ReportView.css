@@ -113,14 +113,15 @@
 .export-btn{
   padding: 10px 20px;
   font-size: 1rem;
-  color: #283593;
+  color: #283593 !important;
+
   border: none;
   border-radius: 5px;
   cursor: pointer;
   text-decoration: none;
   text-align: center;
   transition: background-color 0.3s ease;
-  background-color: #d6e8ee;
+  background-color:#d6e8ee !important;
 }
 
 .export-btn:hover {

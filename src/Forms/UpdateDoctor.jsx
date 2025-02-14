@@ -103,6 +103,9 @@ function UpdateDoctor() {
     }
   };
   return (
+    <div className="docter-main">
+            <button onClick={() => navigate(-1)} className="back-button" style={{color:"#d6e8ee"}}><i className="bi bi-arrow-left"></i></button>
+
     <div className="update-doctor-container">
       <ToastContainer
         position="top-center"
@@ -217,6 +220,7 @@ function UpdateDoctor() {
           {loading ? 'Updating...' : 'Update Doctor'}
         </button>
       </form>
+    </div>
     </div>
   );
 }

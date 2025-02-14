@@ -5,7 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Select from 'react-select';
 import './Doctor.css';
-import { Link } from 'react-router-dom';
+import { Link ,useNavigate} from 'react-router-dom';
 
 function Doctor() {
   const [name, setName] = useState('');
@@ -20,6 +20,7 @@ function Doctor() {
   const [headquartersList, setHeadquartersList] = useState([]);
   const [staffList, setStaffList] = useState([]);
   const [loading, setLoading] = useState(false);
+  const navigate=useNavigate()
 
   useEffect(() => {
     fetchAreas();
@@ -84,7 +85,11 @@ function Doctor() {
   };
 
   return (
+    <div className="docter-main">
+      <button onClick={() => navigate(-1)} className="back-button" style={{color:"#d6e8ee"}}><i className="bi bi-arrow-left"></i></button>
+
     <div className="doctor-container">
+      {/* <Link to="/main/doctor-list" className='btn btn-warning mb-2'>See All Docters</Link> */}
       <ToastContainer
         position="top-center"
         autoClose={3000}
@@ -98,7 +103,6 @@ function Doctor() {
       />
 
       <h1 className="doctor-title">Add New Doctor</h1>
-      <Link to="/main/doctor-list">To All</Link>
       <form className="doctor-form" onSubmit={handleAddDoctor}>
         <div className="doctor-form-group">
           <label htmlFor="name">Name:</label>
@@ -119,7 +123,7 @@ function Doctor() {
             id="address"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
-            required
+            
             className="doctor-input"
           />
         </div>
@@ -131,7 +135,7 @@ function Doctor() {
             id="phoneNumber"
             value={phoneNumber}
             onChange={(e) => setPhoneNumber(e.target.value)}
-            required
+            
             className="doctor-input"
           />
         </div>
@@ -143,7 +147,7 @@ function Doctor() {
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            required
+            
             className="doctor-input"
           />
         </div>
@@ -155,7 +159,6 @@ function Doctor() {
             id="designation"
             value={designation}
             onChange={(e) => setDesignation(e.target.value)}
-            required
             className="doctor-input"
           />
         </div>
@@ -165,6 +168,7 @@ function Doctor() {
           <Select
             id="area"
             value={area}
+            required
             onChange={(selectedOption) => setArea(selectedOption)}
             options={areasList}
             placeholder="Select Area"
@@ -181,6 +185,7 @@ function Doctor() {
             options={headquartersList}
             placeholder="Select Headquarters"
             isSearchable
+            required
           />
         </div>
 
@@ -193,6 +198,7 @@ function Doctor() {
             options={staffList}
             placeholder="Select Staff"
             isSearchable
+            required
           />
         </div>
 
@@ -200,6 +206,7 @@ function Doctor() {
           {loading ? 'Adding...' : 'Add Doctor'}
         </button>
       </form>
+    </div>
     </div>
   );
 }

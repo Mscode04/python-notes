@@ -1,10 +1,13 @@
 .product-container {
     padding: 20px;
+    height: 100vh;
+    background-color: #024579;
   }
   
   .product-header {
     display: flex;
     justify-content: space-between;
+    color:#97cadb ;
     align-items: center;
     margin-bottom: 20px;
   }

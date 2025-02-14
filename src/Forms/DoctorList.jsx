@@ -3,7 +3,7 @@ import { db } from '../Firebase/config';
 import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import './DoctorList.css'; // Add your custom styles for the table and modal
 
@@ -15,6 +15,7 @@ function DoctorList() {
   const [selectedDoctorId, setSelectedDoctorId] = useState(null);
   const [confirmationPin, setConfirmationPin] = useState('');
   const [loading, setLoading] = useState(false);
+  const navigate=useNavigate()
 
   useEffect(() => {
     fetchDoctors();
@@ -38,7 +39,7 @@ function DoctorList() {
   };
 
   const handleDelete = async () => {
-    if (confirmationPin === '2012') {
+    if (confirmationPin === '2024') {
       try {
         await deleteDoc(doc(db, 'Doctors', selectedDoctorId));
         toast.success('Doctor deleted successfully!');
@@ -78,7 +79,7 @@ function DoctorList() {
         pauseOnHover
       />
 
-      <h1 className="doctor-list-title">Doctor List</h1>
+<button onClick={() => navigate(-1)} className="back-button" style={{color:"#d6e8ee"}}><i className="bi bi-arrow-left"></i></button><h1 className="doctor-list-title">Doctor List</h1>
       <Link to="/main/doctor" className="add-doctor-link">
         Add New Doctor
       </Link>
@@ -88,30 +89,22 @@ function DoctorList() {
       ) : (
         <table className="doctor-table">
           <thead>
-            <tr>
-              <th>Name</th>
-              <th>Address</th>
-              <th>Phone Number</th>
-              <th>Email</th>
-              <th>Designation</th>
+            <tr  className='first-main'>
+              <th className='first-hd'>Name</th>
+              <th>Staff</th>
               <th>Area</th>
               <th>Headquarters</th>
-              <th>Staff</th>
-              <th>Actions</th>
+              <th className='first-hd-2'>Actions</th>
             </tr>
           </thead>
           <tbody>
             {doctors.map((doctor) => (
-              <tr key={doctor.id}>
-                <td>{doctor.name}</td>
-                <td>{doctor.address}</td>
-                <td>{doctor.phoneNumber}</td>
-                <td>{doctor.email}</td>
-                <td>{doctor.designation}</td>
+              <tr key={doctor.id} className='docter-list-last'>
+                <td className='name-last-docter'>{doctor.name}</td>
+                <td>{doctor.staff}</td>
                 <td>{doctor.area}</td>
                 <td>{doctor.headquarters}</td>
-                <td>{doctor.staff}</td>
-                <td>
+                <td className='action-last'>
                   <Link to={`/main/update-doctor/${doctor.id}`} className="update-button">
                     Update
                   </Link>

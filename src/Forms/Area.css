@@ -1,274 +1,235 @@
-/* Product Management Page Styles */
-.product-container {
-  height: 100vh;
-  max-width: 100vw;
+/* General Styles */
+.main-area {
+  padding: 20px;
   background-color: #024579;
-  padding: 15px;
-  padding-bottom: 30px;
+  min-height: 100vh;
 }
 
-.product-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
+.area-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.product-title {
-  color: #d6e8ee;
-  font-size: 24px;
-  margin: 0;
-}
 
-.product-add-button {
-  padding: 10px 20px;
+
+
+/* Buttons */
+.add-area-button {
   background-color: #28a745;
   color: white;
   border: none;
+  padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
-  transition: 0.3s;
+  margin-bottom: 20px;
 }
 
-.product-add-button:hover {
+.add-area-button:hover {
   background-color: #218838;
 }
 
-.product-form {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
+.btn {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.btn-warning {
+  background-color: #ffc107;
+  color: black;
+}
+
+.btn-warning:hover {
+  background-color: #e0a800;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+}
+
+/* Search Input */
+.search-input {
+  width: 100%;
+  padding: 10px;
   margin-bottom: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
-.product-form-group {
-  margin-bottom: 15px;
+/* Table Styles */
+.area-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
 }
 
-.product-form-group label {
-  display: block;
-  margin-bottom: 5px;
-  color: #024579;
+.area-table th,
+.area-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.area-table th {
+  background-color: #f8f9fa;
   font-weight: bold;
 }
 
-.product-input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
+.area-table tr:hover {
+  background-color: #f1f1f1;
 }
 
-.product-submit-button {
-  padding: 10px 20px;
-  background-color: #28a745;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: 0.3s;
+/* Responsive Table */
+@media (max-width: 768px) {
+  .area-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .area-table th,
+  .area-table td {
+    min-width: 150px;
+  }
 }
 
-.product-submit-button:hover {
-  background-color: #218838;
-}
-
-.product-search {
-  margin-bottom: 20px;
-}
-
-.product-search-input {
-  width: 100%;
-  max-width: 400px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-}
-
-.product-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  background-color: #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 20px;
-  overflow: hidden;
-}
-
-.product-table th, .product-table td {
-  border: 1px solid #0056b3;
-  padding: 12px;
-  text-align: left;
-}
-
-.product-table th {
-  background-color: #d6e8ee;
-  color: #024579;
-}
-
-.product-table td {
-  background-color: #fff;
-}
-
-.product-update-button {
-  background-color: #ffc107;
-  color: black;
-  border: none;
-  border-radius: 5px;
-  padding: 8px 12px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.product-update-button:hover {
-  opacity: 0.8;
-}
-
-.product-delete-button {
-  background-color: #dc3545;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 8px 12px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.product-delete-button:hover {
-  opacity: 0.8;
-}
-
-.product-save-button {
-  background-color: #28a745;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 8px 12px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.product-save-button:hover {
-  opacity: 0.8;
-}
-
-.product-cancel-button {
-  background-color: #dc3545;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 8px 12px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.product-cancel-button:hover {
-  opacity: 0.8;
-}
-
-.product-pagination {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-}
-
-.product-pagination-button {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: 0.3s;
-  margin: 0 5px;
-}
-
-.product-pagination-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-.product-pagination-button:hover:not(:disabled) {
-  opacity: 0.8;
-}
-
-.product-delete-modal {
+/* Modal Styles */
+.modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
 }
 
-.product-delete-modal-content {
-  background: white;
+.modal-content {
+  background-color: white;
   padding: 20px;
-  border-radius: 10px;
-  text-align: center;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
   width: 90%;
   max-width: 400px;
 }
 
-.product-delete-modal-input {
+.area-form input {
   width: 100%;
   padding: 10px;
+  margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  margin-bottom: 15px;
 }
 
-.product-delete-modal-button {
-  padding: 10px 20px;
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.modal-buttons button {
+  padding: 8px 16px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: 0.3s;
-  margin: 0 5px;
 }
 
-.product-delete-modal-button:first-of-type {
+.modal-buttons button[type="submit"] {
+  background-color: #28a745;
+  color: white;
+}
+
+.modal-buttons button[type="submit"]:hover {
+  background-color: #218838;
+}
+
+.modal-buttons button[type="button"] {
   background-color: #dc3545;
   color: white;
 }
 
-.product-delete-modal-button:last-of-type {
-  background-color: #ccc;
+.modal-buttons button[type="button"]:hover {
+  background-color: #c82333;
 }
 
-.product-delete-modal-button:hover {
-  opacity: 0.8;
+/* Delete Confirmation Modal */
+.delete-confirmation-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
 
-/* Responsive Styles */
-@media (max-width: 768px) {
-  .product-container {
-    padding: 10px;
-  }
+.delete-confirmation-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+}
 
-  .product-table {
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
-  }
+.delete-confirmation-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
 
-  .product-table th, .product-table td {
-    min-width: 120px;
-  }
+.delete-confirm-button {
+  background-color: #dc3545;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
-  .product-search-input {
-    width: 100%;
-  }
+.delete-confirm-button:hover {
+  background-color: #c82333;
+}
 
-  .product-delete-modal-content {
-    width: 90%;
-  }
+.delete-cancel-button {
+  background-color: #6c757d;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.delete-cancel-button:hover {
+  background-color: #5a6268;
+}
+
+/* Back Button */
+.adminreg-back-button {
+  background-color: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.adminreg-back-button:hover {
+  color: #0056b3;
 }

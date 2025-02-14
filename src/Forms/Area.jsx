@@ -76,14 +76,14 @@ function Area() {
       <button
         className="adminreg-back-button"
         onClick={() => navigate(-1)}
-        style={{ color: "#d6e8ee", backgroundColor: "transparent", border: "none" }}
+        style={{ color: "#97cadb", backgroundColor: "transparent", border: "none" }}
       >
         <i className="bi bi-arrow-left"></i>
       </button>
       <div className="area-container">
         <ToastContainer position="top-center" autoClose={3000} hideProgressBar />
 
-        <h1 style={{color:"#d6e8ee"}}>Area Management</h1>
+        <h1 style={{color:"#024579"}}>Areas</h1>
 
         <button className="add-area-button" onClick={() => setShowAddModal(true)}>
           Add New
@@ -121,8 +121,8 @@ function Area() {
                 <td>
                   {editingArea?.id === area.id ? (
                     <>
-                      <button onClick={handleUpdateArea}>Save</button>
-                      <button onClick={() => setEditingArea(null)}>Cancel</button>
+                      <button className='btn btn-success' onClick={handleUpdateArea}>Save</button>
+                      <button className='btn btn-danger' onClick={() => setEditingArea(null)}>Cancel</button>
                     </>
                   ) : (
                     <>
@@ -154,8 +154,8 @@ function Area() {
                   required
                 />
                 <div className="modal-buttons">
-                  <button type="submit" disabled={loading}>{loading ? 'Adding...' : 'Save'}</button>
-                  <button type="button" onClick={() => setShowAddModal(false)}>Cancel</button>
+                  <button type="submit" className='btn btn-success' disabled={loading}>{loading ? 'Adding...' : 'Save'}</button>
+                  <button type="button" className='btn btn-danger' onClick={() => setShowAddModal(false)}>Cancel</button>
                 </div>
               </form>
             </div>

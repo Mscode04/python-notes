@@ -9,10 +9,6 @@ import { Link ,useNavigate} from 'react-router-dom';
 
 function Doctor() {
   const [name, setName] = useState('');
-  const [address, setAddress] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [email, setEmail] = useState('');
-  const [designation, setDesignation] = useState('');
   const [area, setArea] = useState(null);
   const [headquarters, setHeadquarters] = useState(null);
   const [staff, setStaff] = useState(null);
@@ -65,10 +61,6 @@ function Doctor() {
       });
       toast.success('Customer added successfully!');
       setName('');
-      setAddress('');
-      setPhoneNumber('');
-      setEmail('');
-      setDesignation('');
       setArea(null);
       setHeadquarters(null);
       setStaff(null);

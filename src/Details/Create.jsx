@@ -13,9 +13,6 @@ function Create() {
   const navigate=useNavigate()
   // Section 1: Doctor Details
   const [doctorName, setDoctorName] = useState('');
-  const [address, setAddress] = useState('');
-  const [phone, setPhone] = useState('');
-  const [designation, setDesignation] = useState('');
   const [area, setArea] = useState(null);
   const [headquarters, setHeadquarters] = useState(null);
   const [staff, setStaff] = useState(null);
@@ -28,9 +25,6 @@ function Create() {
   const [activityMonth, setActivityMonth] = useState('');
   const [activityDay, setActivityDay] = useState('');
   const [activityAmount, setActivityAmount] = useState('');
-  const [mr, setMr] = useState('');
-  const [abm, setAbm] = useState('');
-  const [rsm, setRsm] = useState('');
   const [targetedTimes, setTargetedTimes] = useState(3.5);
 
   // Section 3: Prescribed Products
@@ -89,20 +83,12 @@ function Create() {
     setDoctorName(selectedOption);
     const selectedDoctor = doctorsList.find(doctor => doctor.value === selectedOption.value);
     if (selectedDoctor) {
-      setAddress(selectedDoctor.address || '');
-      setPhone(selectedDoctor.phoneNumber || '');
-      setDesignation(selectedDoctor.designation || '');
       setArea(selectedDoctor.area ? { value: selectedDoctor.area, label: selectedDoctor.area } : null);
       setHeadquarters(selectedDoctor.headquarters ? { value: selectedDoctor.headquarters, label: selectedDoctor.headquarters } : null);
       setStaff(selectedDoctor.staff ? { value: selectedDoctor.staff, label: selectedDoctor.staff } : null);
     }
   };
-  const handlePrescribedProductChange = (selectedOption, index) => {
-    const newProducts = [...prescribedProducts];
-    newProducts[index].productName = selectedOption ? selectedOption.label : '';
-    setPrescribedProducts(newProducts);
-  };
-  
+
   const handleTargetedProductChange = (selectedOption, index) => {
     const newProducts = [...targetedProducts];
     newProducts[index].productName = selectedOption ? selectedOption.label : '';
@@ -202,7 +188,6 @@ const getStatusColor = () => {
 };
 
 const statusColor = getStatusColor();
-
   return (
     <div className="cretemain">
        <button className="adminreg-back-button" style={{ color: "#d6e8ee", backgroundColor: "transparent", border: "none" }} onClick={() => navigate(-1)}>

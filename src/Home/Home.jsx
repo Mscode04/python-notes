@@ -82,10 +82,10 @@ function Home() {
               <i className="bi bi-box-seam"></i>
               <span>Product</span>
             </Link>
-            <Link to="/main/headquarters" className="IconItem">
+            {/* <Link to="/main/headquarters" className="IconItem">
               <i className="bi bi-buildings"></i>
               <span>HQ</span>
-            </Link>
+            </Link> */}
           </div>
         </div>
       </div>

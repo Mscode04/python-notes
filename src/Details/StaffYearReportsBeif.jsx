@@ -40,62 +40,69 @@ function StaffYearReportsBeif() {
       return date.toLocaleString('default', { month: 'short', year: 'numeric' });
     };
   
-    const exportAllToExcel = () => {
-      // Define the maximum number of dynamic fields (months) to ensure consistent columns
-      const maxDynamicFields = Math.max(...reports.map(report => report.dynamicFields ? report.dynamicFields.length : 0));
+  const exportAllToExcel = () => {
+    // Generate all months in order (Jan-Dec)
+    const allMonths = Array.from({ length: 12 }, (_, i) => {
+      const date = new Date(reports[0].reportOfYear, i);
+      return date.toLocaleString("en-US", { month: "short" }) + "-" + reports[0].reportOfYear;
+    });
     
-      // Create the worksheet data with ordered dynamic fields
-      const worksheetData = reports.map((report) => {
-        const dynamicFieldsData = {};
-        if (report.dynamicFields) {
-          for (let i = 0; i < maxDynamicFields; i++) {
-            const field = report.dynamicFields[i];
-            dynamicFieldsData[`Month ${i + 1}`] = field ? `${formatDate(field.date)} : ${field.amount}` : '';
-          }
-        }
-    
-        return {
-          'Report Year': report.reportOfYear,
-          'Staff': report.staff,
-          'HQ': report.headquarters,
-          'Customer Name': report.doctorName,
-         
-          'Area': report.area,
-          'Month': report.activityMonth,
-          
-          'Amount': report.activityAmount,
-        
-          ...(report.targetedProducts && { 'Targeted Products': report.targetedProducts.join(', ') }),
-          
-          'Targeted Times': report.targetedTimes,
-          'Last Year Amount': report.lastYearAmount,
-          ...dynamicFieldsData, // Add dynamic fields in order
-          'Total Business': report.totalBusiness,
-          'Percentage': `${report.percentage}%`,
-          'Expected Amount': report.expectedAmount,
-          'Status': report.status,
-        };
+    // Create the worksheet data with ordered dynamic fields
+    const worksheetData = reports.map((report) => {
+      // Create monthly sales data
+      const monthlySales = {};
+      allMonths.forEach(month => {
+        const found = report.dynamicFields?.find(field => {
+          const fieldDate = new Date(field.date);
+          return (
+            fieldDate.toLocaleString("en-US", { month: "short" }) + "-" + fieldDate.getFullYear() === month
+          );
+        });
+        monthlySales[month] = found ? `${found.amount}` : "N/A";
       });
-    
-      // Create the worksheet
-      const worksheet = XLSX.utils.json_to_sheet(worksheetData);
-    
-      // Style the headers
-      const headerRange = XLSX.utils.decode_range(worksheet['!ref']);
-      for (let C = headerRange.s.c; C <= headerRange.e.c; ++C) {
-        const cellAddress = XLSX.utils.encode_cell({ r: 0, c: C });
-        if (!worksheet[cellAddress]) continue;
-        worksheet[cellAddress].s = {
-          fill: { fgColor: { rgb: '283593' } },
-          font: { color: { rgb: 'FFFFFF' }, bold: true },
-        };
-      }
-    
-      // Create the workbook and export the file
-      const workbook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(workbook, worksheet, 'Reports');
-      XLSX.writeFile(workbook, `All_Reports_${staff}_${year}.xlsx`);
-    };
+  
+      return {
+        "Report Year": report.reportOfYear,
+        "Staff": report.staff,
+        "HQ": report.headquarters,
+        "Customer Name": report.doctorName,
+        "Area": report.area,
+        "Activity Month": report.activityMonth,
+        "Activity Amount": report.activityAmount,
+        ...(report.targetedProducts && { "Products": report.targetedProducts.join(", ") }),
+        "Targeted Times": report.targetedTimes,
+        "Last Year Amount": report.lastYearAmount,
+        ...monthlySales, // Monthly sales as columns (Jan-Dec)
+        "Total Business": report.totalBusiness,
+        "Percentage": `${Math.round(report.percentage * 100) / 100}%`,
+
+        "Expected Amount": report.expectedAmount,
+        "Status": report.status,
+      };
+    });
+  
+    // Create the worksheet
+    const worksheet = XLSX.utils.json_to_sheet(worksheetData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Reports");
+  
+    // Style headers
+    const headerRange = XLSX.utils.decode_range(worksheet["!ref"]);
+    for (let C = headerRange.s.c; C <= headerRange.e.c; ++C) {
+      const cellAddress = XLSX.utils.encode_cell({ r: 0, c: C });
+      if (!worksheet[cellAddress]) continue;
+      worksheet[cellAddress].s = {
+        fill: { fgColor: { rgb: "283593" } }, // Dark blue background
+        font: { color: { rgb: "FFFFFF" }, bold: true }, // White text, bold
+      };
+    }
+  
+    // Auto-format columns
+    const colWidths = Object.keys(worksheetData[0]).map(key => ({ wch: key.length + 10 })); // Increased width
+    worksheet["!cols"] = colWidths;
+  
+    XLSX.writeFile(workbook, `All_Reports.xlsx`);
+  };
     const getStatusColor = (status) => {
       switch (status) {
         case 'Very Good':
@@ -204,7 +211,7 @@ function StaffYearReportsBeif() {
    
           <td>{report.totalBusiness}</td>
           <td>{report.expectedAmount}</td>
-          <td>{report.percentage}%</td>
+          <td>{Math.round(report.percentage * 100) / 100}%</td>
           <td>
             <button
               className="status-button"

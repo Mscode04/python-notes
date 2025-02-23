@@ -6,6 +6,7 @@
     overflow: auto; 
     background-color: #024579; 
     margin-bottom: 10px;
+    height: 100vh;
   }
   
   h2 {

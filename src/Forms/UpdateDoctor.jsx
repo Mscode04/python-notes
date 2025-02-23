@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../Firebase/config';
-import { doc, getDoc, updateDoc, collection, getDocs } from 'firebase/firestore'; // Add missing imports
+import { doc, getDoc, updateDoc, collection, getDocs } from 'firebase/firestore'; 
 import { useParams, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -11,8 +11,6 @@ function UpdateDoctor() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [name, setName] = useState('');
-
-
   const [area, setArea] = useState(null);
   const [headquarters, setHeadquarters] = useState(null);
   const [staff, setStaff] = useState(null);
@@ -26,7 +24,6 @@ function UpdateDoctor() {
     fetchAreas();
     fetchHeadquarters();
   }, []);
-
   const fetchDoctor = async () => {
     setLoading(true);
     try {

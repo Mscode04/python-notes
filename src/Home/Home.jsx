@@ -42,12 +42,12 @@ function Home() {
             </Link>
             <Link to="/main/doctor-list" className="IconItem">
               <i className="bi bi-file-medical-fill"></i>
-              <span>Doctor</span>
+              <span>Customer</span>
             </Link>
-            <Link to="/main/admin-details" className="IconItem">
+            {/* <Link to="/main/admin-details" className="IconItem">
               <i className="bi bi-person-badge-fill"></i>
               <span>Admins</span>
-            </Link>
+            </Link> */}
             <Link to="/main/staff-details" className="IconItem">
               <i className="bi bi-people-fill"></i>
               <span>Staffs</span>
@@ -68,16 +68,16 @@ function Home() {
             </Link>
             <Link to="/main/doctor" className="IconItem">
               <i className="bi bi-person-plus-fill"></i>
-              <span>Doctor</span>
+              <span>Customer</span>
             </Link>
             <Link to="/main/staff" className="IconItem">
               <i className="bi bi-geo-alt-fill"></i>
               <span>Area</span>
             </Link>
-            <Link to="/main/admin-details" className="IconItem">
+            {/* <Link to="/main/admin-details" className="IconItem">
               <i className="bi bi-person-gear"></i>
               <span>Admin</span>
-            </Link>
+            </Link> */}
             <Link to="/main/product" className="IconItem">
               <i className="bi bi-box-seam"></i>
               <span>Product</span>

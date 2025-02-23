@@ -32,7 +32,7 @@ function DoctorList() {
       setDoctors(doctorsList);
     } catch (error) {
       console.error('Error fetching doctors: ', error);
-      toast.error('Error fetching doctors. Please try again.');
+      toast.error('Error fetching Customer. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -42,12 +42,12 @@ function DoctorList() {
     if (confirmationPin === '2024') {
       try {
         await deleteDoc(doc(db, 'Doctors', selectedDoctorId));
-        toast.success('Doctor deleted successfully!');
+        toast.success('Customer deleted successfully!');
         fetchDoctors(); // Refresh the list after deletion
         closeDeleteModal();
       } catch (error) {
         console.error('Error deleting doctor: ', error);
-        toast.error('Error deleting doctor. Please try again.');
+        toast.error('Error deleting Customer. Please try again.');
       }
     } else {
       toast.error('Incorrect PIN. Please try again.');
@@ -79,9 +79,9 @@ function DoctorList() {
         pauseOnHover
       />
 
-<button onClick={() => navigate(-1)} className="back-button" style={{color:"#d6e8ee"}}><i className="bi bi-arrow-left"></i></button><h1 className="doctor-list-title">Doctor List</h1>
+<button onClick={() => navigate(-1)} className="back-button" style={{color:"#d6e8ee"}}><i className="bi bi-arrow-left"></i></button><h1 className="doctor-list-title">Customer List</h1>
       <Link to="/main/doctor" className="add-doctor-link">
-        Add New Doctor
+        Add New Customer
       </Link>
 
       {loading ? (
@@ -90,7 +90,7 @@ function DoctorList() {
         <table className="doctor-table">
           <thead>
             <tr  className='first-main'>
-              <th className='first-hd'>Name</th>
+              <th className='first-hd'>Customer Name</th>
               <th>Staff</th>
               <th>Area</th>
               <th>Headquarters</th>
@@ -129,7 +129,7 @@ function DoctorList() {
         overlayClassName="delete-modal-overlay"
       >
         <h2>Confirm Deletion</h2>
-        <p>Are you sure you want to delete this doctor? Enter the confirmation PIN to proceed.</p>
+        <p>Are you sure you want to delete this Customer? Enter the confirmation PIN to proceed.</p>
         <input
           type="password"
           placeholder="Enter PIN"

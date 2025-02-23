@@ -15,9 +15,7 @@ function UpdateReport() {
   const navigate=useNavigate()
   // Section 1: Doctor Details
   const [doctorName, setDoctorName] = useState(null);
-  const [address, setAddress] = useState('');
-  const [phone, setPhone] = useState('');
-  const [designation, setDesignation] = useState('');
+
   const [area, setArea] = useState(null);
   const [headquarters, setHeadquarters] = useState(null);
   const [staff, setStaff] = useState(null);
@@ -28,15 +26,12 @@ function UpdateReport() {
 
   // Section 2: Activity Details
   const [activityMonth, setActivityMonth] = useState('');
-  const [activityDay, setActivityDay] = useState('');
+ 
   const [activityAmount, setActivityAmount] = useState('');
-  const [mr, setMr] = useState('');
-  const [abm, setAbm] = useState('');
-  const [rsm, setRsm] = useState('');
+ 
   const [targetedTimes, setTargetedTimes] = useState('');
 
-  // Section 3: Prescribed Products
-  const [prescribedProducts, setPrescribedProducts] = useState([{ productName: '' }]);
+
 
   // Section 4: Targeted Products
   const [targetedProducts, setTargetedProducts] = useState([{ productName: '' }]);
@@ -64,20 +59,16 @@ function UpdateReport() {
       const reportData = docSnap.data();
       setReportOfYear(reportData.reportOfYear);
       setDoctorName({ value: reportData.doctorName, label: reportData.doctorName });
-      setAddress(reportData.address);
-      setPhone(reportData.phone);
-      setDesignation(reportData.designation);
+   
       setArea(reportData.area ? { value: reportData.area, label: reportData.area } : null);
       setHeadquarters(reportData.headquarters ? { value: reportData.headquarters, label: reportData.headquarters } : null);
       setStaff(reportData.staff ? { value: reportData.staff, label: reportData.staff } : null);
       setActivityMonth(reportData.activityMonth);
-      setActivityDay(reportData.activityDay);
+      
       setActivityAmount(reportData.activityAmount);
-      setMr(reportData.mr);
-      setAbm(reportData.abm);
-      setRsm(reportData.rsm);
+
       setTargetedTimes(reportData.targetedTimes);
-      setPrescribedProducts(reportData.prescribedProducts.map(product => ({ productName: product })));
+      
       setTargetedProducts(reportData.targetedProducts.map(product => ({ productName: product })));
       setLastYearAmount(reportData.lastYearAmount);
       setDynamicFields(reportData.dynamicFields);
@@ -114,20 +105,14 @@ function UpdateReport() {
     setDoctorName(selectedOption);
     const selectedDoctor = doctorsList.find(doctor => doctor.value === selectedOption.value);
     if (selectedDoctor) {
-      setAddress(selectedDoctor.address || '');
-      setPhone(selectedDoctor.phoneNumber || '');
-      setDesignation(selectedDoctor.designation || '');
+    
       setArea(selectedDoctor.area ? { value: selectedDoctor.area, label: selectedDoctor.area } : null);
       setHeadquarters(selectedDoctor.headquarters ? { value: selectedDoctor.headquarters, label: selectedDoctor.headquarters } : null);
       setStaff(selectedDoctor.staff ? { value: selectedDoctor.staff, label: selectedDoctor.staff } : null);
     }
   };
 
-  const handlePrescribedProductChange = (selectedOption, index) => {
-    const newProducts = [...prescribedProducts];
-    newProducts[index].productName = selectedOption ? selectedOption.label : '';
-    setPrescribedProducts(newProducts);
-  };
+
 
   const handleTargetedProductChange = (selectedOption, index) => {
     const newProducts = [...targetedProducts];
@@ -145,9 +130,7 @@ function UpdateReport() {
     }
   };
 
-  const handleAddPrescribedProduct = () => {
-    setPrescribedProducts([...prescribedProducts, { productName: '' }]);
-  };
+
 
   const handleAddTargetedProduct = () => {
     setTargetedProducts([...targetedProducts, { productName: '' }]);
@@ -157,27 +140,23 @@ function UpdateReport() {
     setDynamicFields([...dynamicFields, { date: '', amount: '' }]);
   };
 
+ 
+
+  
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
       const reportData = {
         reportOfYear,
         doctorName: doctorName.label,
-        address,
-        phone,
-        designation,
         area: area ? area.label : null,
         headquarters: headquarters ? headquarters.label : null,
         staff: staff ? staff.label : null,
         activityMonth,
-        activityDay,
         activityAmount,
-        mr,
-        abm,
-        rsm,
         targetedTimes,
-        prescribedProducts: prescribedProducts.map(product => product.productName),
         targetedProducts: targetedProducts.map(product => product.productName),
         lastYearAmount,
         dynamicFields,
@@ -188,16 +167,20 @@ function UpdateReport() {
                 statusColor === 'bad' ? 'Bad' :
                 statusColor === 'good' ? 'Good' :
                 statusColor === 'very-good' ? 'Very Good' :
-                'Reload'
+                '[TOPUP][CLOSED]'
       };
-
+  
       await updateDoc(doc(db, "Reports", id), reportData);
-      toast.success(`Report updated successfully with ID: ${id}`);
+      toast.success(`Report updated successfully`);
+  
+      // Navigate back to the previous page
+      navigate(-1);
     } catch (error) {
       console.error("Error updating document: ", error);
       toast.error("Failed to update report. Please try again.");
     }
   };
+  
 
   // Calculate Total Business
   const totalBusiness = parseFloat(lastYearAmount || 0) + dynamicFields.reduce((sum, field) => sum + parseFloat(field.amount || 0), 0);
@@ -208,7 +191,7 @@ function UpdateReport() {
 
   // Determine Status
   const getStatusColor = () => {
-    if (percentage > 100) return 'reload'; // Above 100%
+    if (percentage > 100) return '[TOPUP][CLOSED]'; // Above 100%
     if (percentage >= 75) return 'very-good'; // 75-100%
     if (percentage >= 50) return 'good'; // 50-75%
     if (percentage >= 25) return 'bad'; // 25-50%
@@ -254,9 +237,9 @@ function UpdateReport() {
 
         {/* Section 1: Doctor Details */}
         <div className="section">
-          <h2>Doctor Details</h2>
+          <h2>Customer Details</h2>
           <div className="form-group">
-            <label>Doctor Name:</label>
+            <label>Customer Name:</label>
             <Select
               value={doctorName}
               onChange={handleDoctorChange}
@@ -265,33 +248,7 @@ function UpdateReport() {
               isSearchable
             />
           </div>
-          <div className="form-group">
-            <label>Address:</label>
-            <input
-              type="text"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label>Phone:</label>
-            <input
-              type="text"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label>Designation:</label>
-            <input
-              type="text"
-              value={designation}
-              onChange={(e) => setDesignation(e.target.value)}
-              required
-            />
-          </div>
+    
           <div className="form-group">
             <label>Area:</label>
             <Select
@@ -336,15 +293,7 @@ function UpdateReport() {
               required
             />
           </div>
-          <div className="form-group">
-            <label>Day:</label>
-            <input
-              type="text"
-              value={activityDay}
-              onChange={(e) => setActivityDay(e.target.value)}
-              required
-            />
-          </div>
+  
           <div className="form-group">
             <label>Amount:</label>
             <input
@@ -354,33 +303,8 @@ function UpdateReport() {
               required
             />
           </div>
-          <div className="form-group">
-            <label>MR:</label>
-            <input
-              type="text"
-              value={mr}
-              onChange={(e) => setMr(e.target.value)}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label>ABM:</label>
-            <input
-              type="text"
-              value={abm}
-              onChange={(e) => setAbm(e.target.value)}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label>RSM:</label>
-            <input
-              type="text"
-              value={rsm}
-              onChange={(e) => setRsm(e.target.value)}
-              required
-            />
-          </div>
+         
+     
           <div className="form-group">
             <label>Targeted Times:</label>
             <input
@@ -392,27 +316,11 @@ function UpdateReport() {
           </div>
         </div>
 
-        {/* Section 3: Prescribed Products */}
-        <div className="section">
-          <h2>Prescribed Products</h2>
-          {prescribedProducts.map((product, index) => (
-            <div key={index} className="form-group products-names">
-              <label>Product Name:</label>
-              <Select
-                value={productsList.find(option => option.label === product.productName)}
-                onChange={(selectedOption) => handlePrescribedProductChange(selectedOption, index)}
-                options={productsList}
-                placeholder="Select Product"
-                isSearchable
-              />
-            </div>
-          ))}
-          <button type="button" onClick={handleAddPrescribedProduct}>Add More</button>
-        </div>
+   
 
         {/* Section 4: Targeted Products */}
         <div className="section">
-          <h2>Targeted Products</h2>
+          <h2>Products</h2>
           {targetedProducts.map((product, index) => (
             <div key={index} className="form-group">
               <label>Product Name:</label>
@@ -521,7 +429,7 @@ function UpdateReport() {
                  statusColor === 'bad' ? 'Bad' :
                  statusColor === 'good' ? 'Good' :
                  statusColor === 'very-good' ? 'Very Good' :
-                 'Reload'}
+                 '[TOPUP][CLOSED]'}
               </span>
             </div>
           </div>

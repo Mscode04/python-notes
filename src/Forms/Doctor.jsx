@@ -59,15 +59,11 @@ function Doctor() {
     try {
       await addDoc(collection(db, "Doctors"), {
         name,
-        address,
-        phoneNumber,
-        email,
-        designation,
         area: area ? area.label : '',
         headquarters: headquarters ? headquarters.label : '',
         staff: staff ? staff.label : '',
       });
-      toast.success('Doctor added successfully!');
+      toast.success('Customer added successfully!');
       setName('');
       setAddress('');
       setPhoneNumber('');
@@ -78,7 +74,7 @@ function Doctor() {
       setStaff(null);
     } catch (error) {
       console.error("Error adding document: ", error);
-      toast.error('Error adding doctor. Please try again.');
+      toast.error('Error adding Customer. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -102,7 +98,7 @@ function Doctor() {
         pauseOnHover
       />
 
-      <h1 className="doctor-title">Add New Doctor</h1>
+      <h1 className="doctor-title">Add New Customer</h1>
       <form className="doctor-form" onSubmit={handleAddDoctor}>
         <div className="doctor-form-group">
           <label htmlFor="name">Name:</label>
@@ -112,53 +108,6 @@ function Doctor() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
-            className="doctor-input"
-          />
-        </div>
-
-        <div className="doctor-form-group">
-          <label htmlFor="address">Address:</label>
-          <input
-            type="text"
-            id="address"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            
-            className="doctor-input"
-          />
-        </div>
-
-        <div className="doctor-form-group">
-          <label htmlFor="phoneNumber">Phone Number:</label>
-          <input
-            type="text"
-            id="phoneNumber"
-            value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
-            
-            className="doctor-input"
-          />
-        </div>
-
-        <div className="doctor-form-group">
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            
-            className="doctor-input"
-          />
-        </div>
-
-        <div className="doctor-form-group">
-          <label htmlFor="designation">Designation:</label>
-          <input
-            type="text"
-            id="designation"
-            value={designation}
-            onChange={(e) => setDesignation(e.target.value)}
             className="doctor-input"
           />
         </div>
@@ -203,7 +152,7 @@ function Doctor() {
         </div>
 
         <button type="submit" className="doctor-submit-button" disabled={loading}>
-          {loading ? 'Adding...' : 'Add Doctor'}
+          {loading ? 'Adding...' : 'Save '}
         </button>
       </form>
     </div>

@@ -159,7 +159,7 @@ function BreifReport() {
                 <th onClick={() => handleSort('staff')}>Staff Name</th>
                 <th onClick={() => handleSort('headquarters')}>HQ</th>
                 <th onClick={() => handleSort('year')}>Report Year</th>
-                <th onClick={() => handleSort('totalDoctors')}>Total Doctors</th>
+                <th onClick={() => handleSort('totalDoctors')}>Total Customer</th>
                 <th onClick={() => handleSort('averagePercentage')}>Average Percentage</th>
                 <th onClick={() => handleSort('count')}>Number of Reports</th>
                 <th>Actions</th>

@@ -11,10 +11,8 @@ function UpdateDoctor() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [name, setName] = useState('');
-  const [address, setAddress] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [email, setEmail] = useState('');
-  const [designation, setDesignation] = useState('');
+
+
   const [area, setArea] = useState(null);
   const [headquarters, setHeadquarters] = useState(null);
   const [staff, setStaff] = useState(null);
@@ -37,10 +35,7 @@ function UpdateDoctor() {
       if (docSnap.exists()) {
         const doctorData = docSnap.data();
         setName(doctorData.name);
-        setAddress(doctorData.address);
-        setPhoneNumber(doctorData.phoneNumber);
-        setEmail(doctorData.email);
-        setDesignation(doctorData.designation);
+
         setArea({ value: doctorData.area, label: doctorData.area });
         setHeadquarters({ value: doctorData.headquarters, label: doctorData.headquarters });
         setStaff({ value: doctorData.staff, label: doctorData.staff });
@@ -76,19 +71,15 @@ function UpdateDoctor() {
       const docRef = doc(db, 'Doctors', id);
       await updateDoc(docRef, {
         name,
-        address,
-        phoneNumber,
-        email,
-        designation,
         area: area ? area.label : '',
         headquarters: headquarters ? headquarters.label : '',
         staff: staff ? staff.label : '',
       });
-      toast.success('Doctor updated successfully!');
+      toast.success('Customer updated successfully!');
       navigate('/main/doctor-list');
     } catch (error) {
       console.error('Error updating doctor: ', error);
-      toast.error('Error updating doctor. Please try again.');
+      toast.error('Error updating Customer. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -119,7 +110,7 @@ function UpdateDoctor() {
         pauseOnHover
       />
 
-      <h1 className="update-doctor-title">Update Doctor</h1>
+      <h1 className="update-doctor-title">Update Customer</h1>
       <form className="update-doctor-form" onSubmit={handleUpdate}>
       <div className="doctor-form-group">
           <label htmlFor="name">Name:</label>
@@ -128,54 +119,6 @@ function UpdateDoctor() {
             id="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            required
-            className="doctor-input"
-          />
-        </div>
-
-        <div className="doctor-form-group">
-          <label htmlFor="address">Address:</label>
-          <input
-            type="text"
-            id="address"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            required
-            className="doctor-input"
-          />
-        </div>
-
-        <div className="doctor-form-group">
-          <label htmlFor="phoneNumber">Phone Number:</label>
-          <input
-            type="text"
-            id="phoneNumber"
-            value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
-            required
-            className="doctor-input"
-          />
-        </div>
-
-        <div className="doctor-form-group">
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="doctor-input"
-          />
-        </div>
-
-        <div className="doctor-form-group">
-          <label htmlFor="designation">Designation:</label>
-          <input
-            type="text"
-            id="designation"
-            value={designation}
-            onChange={(e) => setDesignation(e.target.value)}
             required
             className="doctor-input"
           />
@@ -217,7 +160,7 @@ function UpdateDoctor() {
           />
         </div>
         <button type="submit" className="update-doctor-button" disabled={loading}>
-          {loading ? 'Updating...' : 'Update Doctor'}
+          {loading ? 'Updating...' : 'SAVE'}
         </button>
       </form>
     </div>

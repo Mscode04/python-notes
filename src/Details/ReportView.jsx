@@ -82,10 +82,7 @@ function ReportView() {
       ["Report Year", report.reportOfYear],
       ["Staff", report.staff],
       ["Status", report.status],
-      ["Doctor Name", report.doctorName],
-      ["Address", report.address],
-      ["Phone", report.phone],
-      ["Designation", report.designation],
+      ["Customer Name", report.doctorName],
       ["Area", report.area],
       ["Headquarters", report.headquarters],
     ]);
@@ -96,9 +93,7 @@ function ReportView() {
       ["Activity Month", report.activityMonth],
       ["Activity Amount", report.activityAmount],
       ["Target Times", report.targetedTimes],
-      ["MR", report.mr],
-      ["ABM", report.abm],
-      ["RSM", report.rsm],
+    
     ]);
   
     // Monthly Sales Section
@@ -115,11 +110,9 @@ function ReportView() {
     addSectionHeader("Product Items");
     const productItemsData = [];
     if (report.targetedProducts) {
-      productItemsData.push(["Targeted Products", report.targetedProducts.join(", ")]);
+      productItemsData.push(["Products", report.targetedProducts.join(", ")]);
     }
-    if (report.prescribedProducts) {
-      productItemsData.push(["Prescribed Products", report.prescribedProducts.join(", ")]);
-    }
+
     if (productItemsData.length > 0) {
       addTable(productItemsData);
     }
@@ -139,19 +132,12 @@ function ReportView() {
       "Report Year": report.reportOfYear,
       "Staff": report.staff,
       "HQ": report.headquarters,
-      "Doctor Name": report.doctorName,
-      "Address": report.address,
-      "Phone": report.phone,
-      "Designation": report.designation,
+      "Customer Name": report.doctorName,
       "Area": report.area,
       "Month": report.activityMonth,
       "Day": report.activityDay,
       "Amount": report.activityAmount,
-      "MR": report.mr,
-      "ABM": report.abm,
-      "RSM": report.rsm,
-      ...(report.targetedProducts && { "Targeted Products": report.targetedProducts.join(", ") }),
-      ...(report.prescribedProducts && { "Prescribed Products": report.prescribedProducts.join(", ") }),
+      ...(report.targetedProducts && { "Products": report.targetedProducts.join(", ") }),
       "Targeted Times": report.targetedTimes,
       "Last Year Amount": report.lastYearAmount,
       ...(report.dynamicFields && report.dynamicFields.reduce((acc, field, index) => {
@@ -206,7 +192,7 @@ function ReportView() {
     <div className="view-report-container">
       <ToastContainer />
       <button onClick={() => navigate(-1)} className="back-button"><i className="bi bi-arrow-left"  style={{color:"#d6e8ee"}}></i></button>
-      <h1>Report Dr.{report.doctorName}</h1>
+      <h1> {report.doctorName} , STAFF - {report.staff}</h1>
       <table className="report-table">
         <thead>
           <tr>
@@ -227,10 +213,7 @@ function ReportView() {
               ></button>
             </td>
           </tr>
-          <tr><td>Doctor Name</td><td>{report.doctorName}</td></tr>
-          <tr><td>Address</td><td>{report.address}</td></tr>
-          <tr><td>Phone</td><td>{report.phone}</td></tr>
-          <tr><td>Designation</td><td>{report.designation}</td></tr>
+          <tr><td>Customer Name</td><td>{report.doctorName}</td></tr>
           <tr><td>Area</td><td>{report.area}</td></tr>
           <tr><td>Headquarters</td><td>{report.headquarters}</td></tr>
           
@@ -238,9 +221,7 @@ function ReportView() {
           <tr><td>Activity Month</td><td>{report.activityMonth}</td></tr>
           <tr><td>Activity Amount</td><td>{report.activityAmount}</td></tr>
           <tr><td>Target Times</td><td>{report.targetedTimes}</td></tr>
-          <tr><td>MR</td><td>{report.mr}</td></tr>
-          <tr><td>ABM</td><td>{report.abm}</td></tr>
-          <tr><td>RSM</td><td>{report.rsm}</td></tr>
+  
           {report.dynamicFields && (
             <>
               <tr><td colSpan="2" className="bg-info"><strong>Monthly Sales</strong></td></tr>
@@ -254,11 +235,9 @@ function ReportView() {
           )}
           <tr><td colSpan="2" className="bg-info"><strong>Product Items</strong></td></tr>
           {report.targetedProducts && (
-            <tr><td>Targeted Products</td><td>{report.targetedProducts.join(", ")}</td></tr>
+            <tr><td>Products</td><td>{report.targetedProducts.join(", ")}</td></tr>
           )}
-          {report.prescribedProducts && (
-            <tr><td>Prescribed Products</td><td>{report.prescribedProducts.join(", ")}</td></tr>
-          )}
+      
           <tr><td colSpan="2" className="bg-info"><strong>Total Business</strong></td></tr>
           <tr><td>Total Business</td><td>{report.totalBusiness}</td></tr>
           <tr><td>Expected Amount</td><td>{report.expectedAmount}</td></tr>

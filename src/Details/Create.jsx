@@ -118,9 +118,7 @@ function Create() {
     }
   };
 
-  const handleAddPrescribedProduct = () => {
-    setPrescribedProducts([...prescribedProducts, { productName: '' }]);
-  };
+
 
   const handleAddTargetedProduct = () => {
     setTargetedProducts([...targetedProducts, { productName: '' }]);
@@ -141,24 +139,19 @@ function Create() {
   
         // Section 1: Doctor Details
         doctorName: doctorName.label,
-        address,
-        phone,
-        designation,
+     
         area: area ? area.label : null,
         headquarters: headquarters ? headquarters.label : null,
         staff: staff ? staff.label : null,
   
         // Section 2: Activity Details
         activityMonth,
-        activityDay,
+        
         activityAmount,
-        mr,
-        abm,
-        rsm,
+     
         targetedTimes,
   
-        // Section 3: Prescribed Products
-        prescribedProducts: prescribedProducts.map(product => product.productName),
+      
   
         // Section 4: Targeted Products
         targetedProducts: targetedProducts.map(product => product.productName),
@@ -177,14 +170,15 @@ function Create() {
         statusColor === 'bad' ? 'Bad' :
         statusColor === 'good' ? 'Good' :
         statusColor === 'very-good' ? 'Very Good' :
-        'Reload'
+        '[TOPUP][CLOSED]'
       };
   
       // Add the report data to the "Reports" collection in Firestore
       const docRef = await addDoc(collection(db, "Reports"), reportData);
   
       // Notify the user that the report was created successfully
-      toast.success(`Report created successfully with ID: ${docRef.id}`);
+      toast.success(`Report created successfully `);
+      navigate(-1);
     } catch (error) {
       console.error("Error adding document: ", error);
       toast.error("Failed to create report. Please try again.");
@@ -200,7 +194,7 @@ const percentage = totalBusiness === 0 ? 0 : ((parseFloat( totalBusiness|| 0) /e
 
 // Determine Status
 const getStatusColor = () => {
-  if (percentage > 100) return 'reload'; // Above 100%
+  if (percentage > 100) return '[TOPUP][CLOSED]'; // Above 100%
   if (percentage >= 75) return 'very-good'; // 75-100%
   if (percentage >= 50) return 'good'; // 50-75%
   if (percentage >= 25) return 'bad'; // 25-50%
@@ -246,45 +240,19 @@ const statusColor = getStatusColor();
 
         {/* Section 1: Doctor Details */}
         <div className="section">
-          <h2>Doctor Details</h2>
+          <h2>Customer Details</h2>
           <div className="form-group">
-            <label>Doctor Name:</label>
+            <label>Customer Name:</label>
             <Select
               value={doctorName}
               onChange={handleDoctorChange}
               options={doctorsList}
-              placeholder="Select Doctor"
+              placeholder="Select Customer"
               isSearchable
               required
             />
           </div>
-          <div className="form-group">
-            <label>Address:</label>
-            <input
-              type="text"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              
-            />
-          </div>
-          <div className="form-group">
-            <label>Phone:</label>
-            <input
-              type="text"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              
-            />
-          </div>
-          <div className="form-group">
-            <label>Designation:</label>
-            <input
-              type="text"
-              value={designation}
-              onChange={(e) => setDesignation(e.target.value)}
-              
-            />
-          </div>
+    
           <div className="form-group">
             <label>Area:</label>
             <Select
@@ -351,33 +319,7 @@ const statusColor = getStatusColor();
               required
             />
           </div>
-          <div className="form-group">
-            <label>MR:</label>
-            <input
-              type="text"
-              value={mr}
-              onChange={(e) => setMr(e.target.value)}
-              
-            />
-          </div>
-          <div className="form-group">
-            <label>ABM:</label>
-            <input
-              type="text"
-              value={abm}
-              onChange={(e) => setAbm(e.target.value)}
-              
-            />
-          </div>
-          <div className="form-group">
-            <label>RSM:</label>
-            <input
-              type="text"
-              value={rsm}
-              onChange={(e) => setRsm(e.target.value)}
-              
-            />
-          </div>
+         
           <div className="form-group">
             <label>Targeted Times:</label>
             <input
@@ -389,28 +331,11 @@ const statusColor = getStatusColor();
           </div>
         </div>
 
-       {/* Section 3: Prescribed Products */}
-<div className="section">
-  <h2>Prescribed Products</h2>
-  {prescribedProducts.map((product, index) => (
-    <div key={index} className="form-group products-names">
-      <label>Product Name:</label>
-      <Select
-        value={productsList.find(option => option.label === product.productName)}
-        onChange={(selectedOption) => handlePrescribedProductChange(selectedOption, index)}
-        options={productsList}
-        placeholder="Select Product"
-        
-        isSearchable
-      />
-    </div>
-  ))}
-  <button type="button" onClick={handleAddPrescribedProduct}>Add More</button>
-</div>
+    
 
 {/* Section 4: Targeted Products */}
 <div className="section">
-  <h2>Targeted Products</h2>
+  <h2>Products</h2>
   {targetedProducts.map((product, index) => (
     <div key={index} className="form-group">
       <label>Product Name:</label>
@@ -520,7 +445,7 @@ const statusColor = getStatusColor();
        statusColor === 'bad' ? 'Bad' : 
        statusColor === 'good' ? 'Good' : 
        statusColor === 'very-good' ? 'Very Good' : 
-       'Reload'}
+       '[TOPUP][CLOSED]'}
     </span>
   </div>
 </div>

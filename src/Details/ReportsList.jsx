@@ -103,10 +103,10 @@ function ReportList() {
         <div className="search-filter-container">
           <input 
             type="text" 
-            placeholder="Search Doctor, Staff, HQ, Area..." 
+            placeholder="Search " 
             value={search} 
             onChange={(e) => setSearch(e.target.value)} 
-            className="search-input"
+            className="search-input mt-4"
           />
 
           <select onChange={(e) => setFilters({ ...filters, headquarters: e.target.value })}>
@@ -153,7 +153,7 @@ function ReportList() {
           <table className="allreport-table">
             <thead>
               <tr>
-                <th onClick={() => handleSort('doctorName')}>Doctor Name</th>
+                <th onClick={() => handleSort('doctorName')}>Customer Name</th>
                 <th onClick={() => handleSort('staff')}>Staff Name</th>
                 <th onClick={() => handleSort('reportOfYear')}>Report Year</th>
                 <th onClick={() => handleSort('totalBusiness')}>Total Business</th>

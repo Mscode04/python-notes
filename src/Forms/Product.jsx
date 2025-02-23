@@ -185,7 +185,7 @@ function Product() {
         <thead>
           <tr>
             <th>Product Name</th>
-            <th>Product Details</th>
+            
             <th>Actions</th>
           </tr>
         </thead>
@@ -205,7 +205,7 @@ function Product() {
                   product.productName
                 )}
               </td>
-              <td>
+              {/* <td>
                 {editingProduct?.id === product.id ? (
                   <textarea
                     value={editingProduct.productDetails}
@@ -216,7 +216,7 @@ function Product() {
                 ) : (
                   product.productDetails
                 )}
-              </td>
+              </td> */}
               <td>
                 {editingProduct?.id === product.id ? (
                   <>

@@ -58,19 +58,15 @@ function StaffYearReportsBeif() {
           'Report Year': report.reportOfYear,
           'Staff': report.staff,
           'HQ': report.headquarters,
-          'Doctor Name': report.doctorName,
-          'Address': report.address,
-          'Phone': report.phone,
-          'Designation': report.designation,
+          'Customer Name': report.doctorName,
+         
           'Area': report.area,
           'Month': report.activityMonth,
-          'Day': report.activityDay,
+          
           'Amount': report.activityAmount,
-          'MR': report.mr,
-          'ABM': report.abm,
-          'RSM': report.rsm,
+        
           ...(report.targetedProducts && { 'Targeted Products': report.targetedProducts.join(', ') }),
-          ...(report.prescribedProducts && { 'Prescribed Products': report.prescribedProducts.join(', ') }),
+          
           'Targeted Times': report.targetedTimes,
           'Last Year Amount': report.lastYearAmount,
           ...dynamicFieldsData, // Add dynamic fields in order
@@ -111,7 +107,7 @@ function StaffYearReportsBeif() {
         case 'Very Bad':
           return '#FF0000';
         default:
-          return '#808080';
+          return '#0000FF';
       }
     };
   
@@ -176,7 +172,7 @@ function StaffYearReportsBeif() {
         <table className="reports-table">
           <thead>
             <tr>
-              <th>Doctor Name</th>
+              <th>Customer Name</th>
               <th>Area</th>
               <th>Headquarters</th>
               <th>Activity Month</th>

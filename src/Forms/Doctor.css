@@ -3,6 +3,7 @@
 /* Container for the entire component */
 .doctor-container {
     max-width: 800px;
+    height: 100vh;
     margin: 0 auto;
     padding: 20px;
     background-color: #97cadb;

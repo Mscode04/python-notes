@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { db } from "../Firebase/config";
 import { collection, getDocs ,addDoc} from "firebase/firestore";
 import Select from 'react-select';
@@ -6,10 +6,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './Create.css'; // Import CSS for styling
 import { useNavigate } from 'react-router-dom';
-
+import { useState } from "react";
 function Create() {
   // Section 0: General Details
-  const [reportOfYear, setReportOfYear] = useState('');
+  const currentYear = new Date().getFullYear();
+  const [reportOfYear, setReportOfYear] = useState(currentYear);
   const navigate=useNavigate()
   // Section 1: Doctor Details
   const [doctorName, setDoctorName] = useState('');
@@ -20,15 +21,13 @@ function Create() {
   const [areasList, setAreasList] = useState([]);
   const [headquartersList, setHeadquartersList] = useState([]);
   const [staffList, setStaffList] = useState([]);
-
   // Section 2: Activity Details
   const [activityMonth, setActivityMonth] = useState('');
   const [activityDay, setActivityDay] = useState('');
   const [activityAmount, setActivityAmount] = useState('');
   const [targetedTimes, setTargetedTimes] = useState(3.5);
 
-  // Section 3: Prescribed Products
-  const [prescribedProducts, setPrescribedProducts] = useState([{ productName: '' }]);
+
 
   // Section 4: Targeted Products
   const [targetedProducts, setTargetedProducts] = useState([{ productName: ''}]);
@@ -187,6 +186,9 @@ const getStatusColor = () => {
   return 'very-bad'; // Below 25%
 };
 
+
+
+
 const statusColor = getStatusColor();
   return (
     <div className="cretemain">
@@ -213,14 +215,14 @@ const statusColor = getStatusColor();
         <div className="section">
           <h2>General Details</h2>
           <div className="form-group">
-            <label>Report of Year:</label>
-            <input
-              type="text"
-              value={reportOfYear}
-              onChange={(e) => setReportOfYear(e.target.value)}
-              required
-            />
-          </div>
+      <label>Report of Year:</label>
+      <input
+        type="text"
+        value={reportOfYear}
+        onChange={(e) => setReportOfYear(e.target.value)}
+        required
+      />
+    </div>
         </div>
 
         {/* Section 1: Doctor Details */}

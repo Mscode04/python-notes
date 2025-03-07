@@ -1,9 +1,15 @@
 .product-container {
     padding: 20px;
     height: 100vh;
+    
     background-color: #024579;
   }
-  
+  .product-pagination{
+    
+    width: 100vw;
+    
+    background-color: #024579;
+  }
   .product-header {
     display: flex;
     justify-content: space-between;
@@ -68,18 +74,22 @@
   .product-update-button, .product-delete-button, .product-save-button, .product-cancel-button {
     padding: 5px 10px;
     margin-right: 5px;
+    
     cursor: pointer;
   }
   
   .product-pagination {
     margin-top: 20px;
     display: flex;
+    padding-bottom: 30px;
+    margin-left: -20px;
     justify-content: center;
   }
   
   .product-pagination-button {
     padding: 5px 10px;
     margin-right: 5px;
+    
     cursor: pointer;
   }
   

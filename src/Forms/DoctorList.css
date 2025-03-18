@@ -224,3 +224,59 @@
 .back-button:hover {
   color: #018abe;
 }
+/* Search and Filters Section */
+.doclist-search-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.doclist-search-input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  min-width: 200px;
+  background-color: #fff;
+  color: #024579;
+}
+
+.doclist-filter-select,
+.doclist-sort-select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  background-color: #fff;
+  color: #024579;
+  cursor: pointer;
+}
+
+.doclist-filter-select:hover,
+.doclist-sort-select:hover {
+  border-color: #018abe;
+}
+
+.doclist-filter-select:focus,
+.doclist-sort-select:focus,
+.doclist-search-input:focus {
+  outline: none;
+  border-color: #018abe;
+  box-shadow: 0 0 5px rgba(1, 138, 190, 0.5);
+}
+
+/* Responsive Filters */
+@media (max-width: 768px) {
+  .doclist-search-filters {
+    flex-direction: column;
+  }
+
+  .doclist-search-input,
+  .doclist-filter-select,
+  .doclist-sort-select {
+    width: 100%;
+  }
+}

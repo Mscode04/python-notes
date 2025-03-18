@@ -9,8 +9,8 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from "react";
 function Create() {
   // Section 0: General Details
-  const currentYear = new Date().getFullYear();
-  const [reportOfYear, setReportOfYear] = useState(currentYear);
+  
+  const [reportOfYear, setReportOfYear] = useState("2025");
   const navigate=useNavigate()
   // Section 1: Doctor Details
   const [doctorName, setDoctorName] = useState('');

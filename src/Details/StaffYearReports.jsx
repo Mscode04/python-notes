@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../Firebase/config';
 import { collection, getDocs, query, where } from 'firebase/firestore';
-import { useParams, Link ,useNavigate} from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import 'jspdf-autotable';
 import * as XLSX from 'xlsx';
 import './StaffYearReports.css';
@@ -13,6 +13,7 @@ function StaffYearReports() {
   const [percentageFilter, setPercentageFilter] = useState('all');
   const [sortOrder, setSortOrder] = useState('asc');
   const navigate = useNavigate();
+
   useEffect(() => {
     const fetchReports = async () => {
       const q = query(
@@ -46,7 +47,7 @@ function StaffYearReports() {
       const date = new Date(reports[0].reportOfYear, i);
       return date.toLocaleString("en-US", { month: "short" }) + "-" + reports[0].reportOfYear;
     });
-    
+
     // Create the worksheet data with ordered dynamic fields
     const worksheetData = reports.map((report) => {
       // Create monthly sales data
@@ -60,7 +61,7 @@ function StaffYearReports() {
         });
         monthlySales[month] = found ? `${found.amount}` : "N/A";
       });
-  
+
       return {
         "Report Year": report.reportOfYear,
         "Staff": report.staff,
@@ -79,12 +80,12 @@ function StaffYearReports() {
         "Status": report.status,
       };
     });
-  
+
     // Create the worksheet
     const worksheet = XLSX.utils.json_to_sheet(worksheetData);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Reports");
-  
+
     // Style headers
     const headerRange = XLSX.utils.decode_range(worksheet["!ref"]);
     for (let C = headerRange.s.c; C <= headerRange.e.c; ++C) {
@@ -95,14 +96,14 @@ function StaffYearReports() {
         font: { color: { rgb: "FFFFFF" }, bold: true }, // White text, bold
       };
     }
-  
+
     // Auto-format columns
     const colWidths = Object.keys(worksheetData[0]).map(key => ({ wch: key.length + 10 })); // Increased width
     worksheet["!cols"] = colWidths;
-  
+
     XLSX.writeFile(workbook, `All_Reports.xlsx`);
   };
-  
+
   const getStatusColor = (status) => {
     switch (status) {
       case 'Very Good':
@@ -148,116 +149,125 @@ function StaffYearReports() {
   const filteredReports = filterReports(reports);
   const sortedReports = sortReports(filteredReports);
 
-  if (loading) return <div className='loading-container'>
-    <img src="https://i.pinimg.com/originals/65/ba/48/65ba488626025cff82f091336fbf94bb.gif" alt="" />
-  </div>;
+  if (loading) return (
+    <div className='loading-container'>
+      <img src="https://i.pinimg.com/originals/65/ba/48/65ba488626025cff82f091336fbf94bb.gif" alt="" />
+    </div>
+  );
 
   return (
     <div className="reports-container">
-  <button onClick={() => navigate(-1)} className="back-button" style={{ color: "#d6e8ee" }}>
-    <i className="bi bi-arrow-left"></i>
-  </button>
-  <h2>Reports for {decodeURIComponent(staff)} - {year}</h2>
-  <div className="filters-container">
-    <label>
-      <select value={percentageFilter} onChange={(e) => setPercentageFilter(e.target.value)}>
-        <option value="all">All</option>
-        <option value="below25">Below 25%</option>
-        <option value="25-50">25% - 50%</option>
-        <option value="50-75">50% - 75%</option>
-        <option value="75-100">75% - 100%</option>
-        <option value="above100">Above 100%</option>
-      </select>
-    </label>
+      <button onClick={() => navigate(-1)} className="back-button" style={{ color: "#d6e8ee" }}>
+        <i className="bi bi-arrow-left"></i>
+      </button>
+      <h2>Reports for {decodeURIComponent(staff)} - {year}</h2>
 
-    <label>
-      <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
-        <option value="asc">Ascending</option>
-        <option value="desc">Descending</option>
-      </select>
-    </label>
-  </div>
+      {/* Total Reports */}
+      <h3>Total Reports: {sortedReports.length}</h3>
 
-  <table className="reports-table">
-    <thead>
-      <tr>
-        <th>Customer Name</th>
-        <th>Area</th>
-        <th>Headquarters</th>
-        <th>Activity Month</th>
-        <th>Activity Amount</th>
-        <th>Target Times</th>
-        <th>Last Year Collection</th>
-        {/* Dynamically generate monthly columns (Jan-X to Dec-X) */}
-        {Array.from({ length: 12 }, (_, i) => {
-          const date = new Date(year, i);
-          const monthYear = date.toLocaleString("en-US", { month: "short" }) + "-" + year;
-          return <th key={i}>{monthYear}</th>;
-        })}
-        <th>Total Business</th>
-        <th>Expected Amount</th>
-        <th>Percentage</th>
-        <th>Status</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      {sortedReports.map((report) => {
-        // Generate monthly sales data for the current report
-        const monthlySales = {};
-        Array.from({ length: 12 }, (_, i) => {
-          const date = new Date(year, i);
-          const monthYear = date.toLocaleString("en-US", { month: "short" }) + "-" + year;
-          const found = report.dynamicFields?.find((field) => {
-            const fieldDate = new Date(field.date);
-            return (
-              fieldDate.toLocaleString("en-US", { month: "short" }) + "-" + fieldDate.getFullYear() === monthYear
-            );
-          });
-          monthlySales[monthYear] = found ? found.amount : "N/A";
-        });
+      <div className="filters-container">
+        <label>
+          <select value={percentageFilter} onChange={(e) => setPercentageFilter(e.target.value)}>
+            <option value="all">All</option>
+            <option value="below25">Below 25%</option>
+            <option value="25-50">25% - 50%</option>
+            <option value="50-75">50% - 75%</option>
+            <option value="75-100">75% - 100%</option>
+            <option value="above100">Above 100%</option>
+          </select>
+        </label>
 
-        return (
-          <tr key={report.id}>
-            <td>{report.doctorName}</td>
-            <td>{report.area}</td>
-            <td>{report.headquarters}</td>
-            <td>{report.activityMonth}</td>
-            <td>{report.activityAmount}</td>
-            <td>{report.targetedTimes}</td>
-            <td>{report.lastYearAmount}</td>
-            {/* Render monthly sales data */}
+        <label>
+          <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+          </select>
+        </label>
+      </div>
+
+      <table className="reports-table">
+        <thead>
+          <tr>
+            <th>#</th> {/* Serial Number Column */}
+            <th>Customer Name</th>
+            <th>Area</th>
+            <th>Headquarters</th>
+            <th>Activity Month</th>
+            <th>Activity Amount</th>
+            <th>Target Times</th>
+            <th>Last Year Collection</th>
+            {/* Dynamically generate monthly columns (Jan-X to Dec-X) */}
             {Array.from({ length: 12 }, (_, i) => {
               const date = new Date(year, i);
               const monthYear = date.toLocaleString("en-US", { month: "short" }) + "-" + year;
-              return <td key={i}>{monthlySales[monthYear]}</td>;
+              return <th key={i}>{monthYear}</th>;
             })}
-            <td>{report.totalBusiness}</td>
-            <td>{report.expectedAmount}</td>
-            <td>{Math.round(report.percentage * 100) / 100}%</td>
-            <td>
-              <button
-                className="status-button"
-                style={{ backgroundColor: getStatusColor(report.status) }}
-                title={report.status}
-              ></button>
-            </td>
-            <td>
-              <Link to={`/main/update-report/${report.id}`} className="export-btn">
-                Update
-              </Link>
-            </td>
+            <th>Total Business</th>
+            <th>Expected Amount</th>
+            <th>Percentage</th>
+            <th>Status</th>
+            <th>Actions</th>
           </tr>
-        );
-      })}
-    </tbody>
-  </table>
-  <div className="download-buttons">
-    <button onClick={exportAllToExcel} className="export-btn">
-      Download All as Excel
-    </button>
-  </div>
-</div>
+        </thead>
+        <tbody>
+          {sortedReports.map((report, index) => {
+            // Generate monthly sales data for the current report
+            const monthlySales = {};
+            Array.from({ length: 12 }, (_, i) => {
+              const date = new Date(year, i);
+              const monthYear = date.toLocaleString("en-US", { month: "short" }) + "-" + year;
+              const found = report.dynamicFields?.find((field) => {
+                const fieldDate = new Date(field.date);
+                return (
+                  fieldDate.toLocaleString("en-US", { month: "short" }) + "-" + fieldDate.getFullYear() === monthYear
+                );
+              });
+              monthlySales[monthYear] = found ? found.amount : "N/A";
+            });
+
+            return (
+              <tr key={report.id}>
+                <td>{index + 1}</td> {/* Serial Number */}
+                <td>{report.doctorName}</td>
+                <td>{report.area}</td>
+                <td>{report.headquarters}</td>
+                <td>{report.activityMonth}</td>
+                <td>{report.activityAmount}</td>
+                <td>{report.targetedTimes}</td>
+                <td>{report.lastYearAmount}</td>
+                {/* Render monthly sales data */}
+                {Array.from({ length: 12 }, (_, i) => {
+                  const date = new Date(year, i);
+                  const monthYear = date.toLocaleString("en-US", { month: "short" }) + "-" + year;
+                  return <td key={i}>{monthlySales[monthYear]}</td>;
+                })}
+                <td>{report.totalBusiness}</td>
+                <td>{report.expectedAmount}</td>
+                <td>{Math.round(report.percentage * 100) / 100}%</td>
+                <td>
+                  <button
+                    className="status-button"
+                    style={{ backgroundColor: getStatusColor(report.status) }}
+                    title={report.status}
+                  ></button>
+                </td>
+                <td>
+                  <Link to={`/main/update-report/${report.id}`} className="export-btn">
+                    Update
+                  </Link>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+
+      <div className="download-buttons">
+        <button onClick={exportAllToExcel} className="export-btn">
+          Download All as Excel
+        </button>
+      </div>
+    </div>
   );
 }
 
